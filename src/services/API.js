@@ -17,5 +17,8 @@ export default {
   },
   updateCart(payload) {
     return apiClient.post("/update-cart/", payload)
+  },
+  login(payload) {
+    return apiClient.post("/login/", payload)
   }
 };

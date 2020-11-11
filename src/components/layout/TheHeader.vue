@@ -29,7 +29,7 @@
           >Order</router-link
         >
         <router-link
-          to="/"
+          to="/login"
           tag="div"
           class="router-link font-secondary font-weight-normal"
           >Login</router-link

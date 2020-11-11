@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueCookies from 'vue-cookies'
+import VueCookies from 'vue-cookies';
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -14,7 +14,7 @@ Vue.config.productionTip = false;
 Vue.component("product-card", ProductCard);
 Vue.component("product-grid", ProductGrid);
 Vue.component("base-card", BaseCard);
-Vue.use(VueCookies)
+Vue.use(VueCookies);
 Vue.use(UUID);
 
 // set default config
