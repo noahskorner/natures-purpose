@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <button class="btn btn-block btn-success" @click="userLogin()">
+      <button class="btn btn-block btn-success" @click="loginUser()">
         Login
       </button>
       <router-link to="/register">Register</router-link>
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     ...mapActions("user", ["login"]),
-    async userLogin() {
+    async loginUser() {
       const payload = {
         username: this.username,
         password: this.password

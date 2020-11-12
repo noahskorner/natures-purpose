@@ -20,9 +20,13 @@ Vue.use(UUID);
 // set default config
 Vue.$cookies.config('14d')
 
-// set global cookie
+// set global cookies
 if(Vue.$cookies.get('device') === null || Vue.$cookies.get('device') === undefined){
   Vue.$cookies.set('device', uuid.v4());
+};
+if(Vue.$cookies.get('isAuthenticated') === null || Vue.$cookies.get('isAuthenticated') === undefined){
+  Vue.$cookies.set('isAuthenticated', false);
+  Vue.$cookies.set('auth', "");
 };
 
 new Vue({

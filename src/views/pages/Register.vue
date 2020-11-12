@@ -7,13 +7,25 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="username">Username or Email</label>
+            <label for="username">Username</label>
             <input
               type="text"
               class="form-control"
               id="username"
               v-model="username"
-              placeholder="Enter username or email"
+              placeholder="Enter username"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              v-model="email"
+              placeholder="Enter email"
             />
           </div>
         </div>
@@ -31,7 +43,7 @@
         </div>
       </div>
 
-      <button class="btn btn-block btn-success">
+      <button class="btn btn-block btn-success" @click="registerUser()">
         Register
       </button>
     </div>
@@ -44,20 +56,22 @@ export default {
   data() {
     return {
       username: "",
+      email: "",
       password: ""
     };
   },
   methods: {
-    ...mapActions("user", ["login"]),
-    async userLogin() {
+    ...mapActions("user", ["register"]),
+    async registerUser() {
       const payload = {
         username: this.username,
-        password: this.password
+        email: this.email,
+        password: this.password,
       };
 
-      await this.login(payload)
+      await this.register(payload)
         .then()
-        .then(this.$router.push("/order"));
+        .then(this.$router.push("/login"));
     }
   }
 };
