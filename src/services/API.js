@@ -41,5 +41,6 @@ export default {
     }
 
     return axios.post("https://npdelivered-backend.herokuapp.com/auth/logout/", null, config);
+    
   },
 };
