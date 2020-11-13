@@ -47,30 +47,4 @@ export default {
 </script>
 
 <style scoped>
-.cart-modal {
-  backdrop-filter: blur(5px);
-  top: 0;
-}
-
-.cart {
-  border-left: 1px solid #cccccc;
-}
-
-.tag {
-  cursor: pointer;
-  background-color: transparent;
-  border: 1px solid var(--success);
-  border-radius: 8rem;
-  color: var(--success);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-@media (min-width: 992px) {
-  .cart {
-    position: relative;
-    right: 0;
-    width: 500px !important;
-  }
-}
 </style>
