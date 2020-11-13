@@ -1,22 +1,35 @@
 <template>
   <div id="app">
-    <the-header />
+    <the-sidebar v-if="showSidebar" @toggle-sidebar="toggleSidebar()"></the-sidebar>
+    <the-header @toggle-sidebar="toggleSidebar()"/>
     <router-view />
-    <the-cart v-if="getShowCart" />
+    <the-cart v-show="getShowCart" />
   </div>
 </template>
 
 <script>
+import TheSidebar from "./components/layout/TheSidebar";
 import TheHeader from "./components/layout/TheHeader";
 import TheCart from "@/components/layout/TheCart.vue";
 import { mapGetters } from "vuex";
 export default {
   components: {
+    TheSidebar,
     TheHeader,
     TheCart
   },
+  data() {
+    return{
+      showSidebar: true
+    }
+  },
   computed: {
     ...mapGetters("cart", ["getShowCart"])
+  },
+  methods: {
+    toggleSidebar() {
+      this.showSidebar = !this.showSidebar;
+    }
   }
 };
 </script>

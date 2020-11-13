@@ -43,15 +43,15 @@
 }
 
 .max-width-1440 {
-  max-width: 1440px;
+  max-width: 1440px !important;
 }
 
-.max-width-1080 {
-  max-width: 1080px !important;
+.max-width-720 {
+  max-width: 720px !important;
 }
 
 .max-width-320 {
-  max-width: 480px !important;
+  max-width: 320px !important;
 }
 
 .hr{

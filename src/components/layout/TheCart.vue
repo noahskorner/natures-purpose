@@ -2,7 +2,7 @@
   <section>
     <div class="modal d-flex justify-content-between">
       <div class="w-100 d-none d-md-block" @click="toggleShowCart()"></div>
-      <div class="cart border-left d-flex flex-column justify-content-between">
+      <div class="cart border-left d-flex flex-column justify-content-start position-relative">
         <div class="w-100">
           <div class="d-flex justify-content-between bg-cream">
             <h3
@@ -16,27 +16,23 @@
           </div>
           <div class="hr"></div>
         </div>
-        <div class="cart-items h-100 d-flex justify-content-start">
-          <div class="w-100">
-            <cart-item
-              v-for="item in getCart.order_items"
-              :key="item.id"
-              :id="item.product.id"
-              :name="item.product.name"
-              :quantity="item.quantity"
-              :size="item.size"
-            />
-          </div>
+        <div class="cart-items w-100 mb-5">
+          <cart-item
+            v-for="item in getCart.order_items"
+            :key="item.id"
+            :id="item.product.id"
+            :name="item.product.name"
+            :quantity="item.quantity"
+            :size="item.size"
+          />
         </div>
-        <div class="w-100 bg-cream">
-          <div class="hr"></div>
-          <button
-            class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary"
-            @click="$router.push('/checkout')"
-          >
-            Checkout
-          </button>
-        </div>
+
+        <button
+          class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary position-absolute checkout-btn"
+          @click="$router.push('/checkout')"
+        >
+          Checkout
+        </button>
       </div>
     </div>
   </section>
@@ -48,10 +44,10 @@ import { mapActions, mapGetters } from "vuex";
 import CartItem from "../ui/CartItem";
 export default {
   components: {
-    CartItem
+    CartItem,
   },
   computed: {
-    ...mapGetters("cart", ["getCart"])
+    ...mapGetters("cart", ["getCart"]),
   },
   methods: {
     ...mapActions("cart", ["toggleShowCart", "loadCart"]),
@@ -59,7 +55,7 @@ export default {
   async mounted() {
     const payload = { device: this.$cookies.get("device") };
     await this.loadCart(payload);
-  }
+  },
 };
 </script>
 
@@ -81,6 +77,10 @@ export default {
 
 .cart-items {
   overflow-y: scroll;
+}
+
+.checkout-btn{
+  bottom: 0;
 }
 
 @media (min-width: 768px) {

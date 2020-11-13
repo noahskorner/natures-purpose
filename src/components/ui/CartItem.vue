@@ -7,70 +7,70 @@
     <div>
       <p class="font-italic">with Grilled Chicken, Brown Rice, and Broccoli</p>
     </div>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between align-items-center">
+      <h6 class="mb-0">{{ size.name }}</h6>
       <div>
-      <button class="btn btn-danger btn-sm mr-2" @click="deleteFromCart()">Remove</button>
-      <div class="btn-group">
-        <button class="btn btn-dark btn-sm" @click="removeOneFromCart()">
-          <i class="fas fa-minus"></i>
+        <button class="btn btn-danger btn-sm mr-2" @click="deleteFromCart()">
+          Remove
         </button>
-        <div class="size-btn-sm text-center">
-          <div class="d-flex flex-column justify-items-center align-items-center">
-            <div class="d-inline">{{ quantity }}</div>
+        <div class="btn-group">
+          <button class="btn btn-dark btn-sm" @click="removeOneFromCart()">
+            <i class="fas fa-minus"></i>
+          </button>
+          <div class="size-btn-sm d-flex justify-content-center align-items-center">
+              <p class="d-block my-auto">{{ quantity }}</p>
           </div>
+          <button class="btn btn-success btn-sm" @click="addOneToCart()">
+            <i class="fas fa-plus"></i>
+          </button>
         </div>
-        <button class="btn btn-success btn-sm" @click="addOneToCart()">
-          <i class="fas fa-plus"></i>
-        </button>
       </div>
-      </div>
-      <h6>{{ size.name }}</h6>
     </div>
     <div class="w-full hr mt-2"></div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 export default {
   props: ["id", "name", "quantity", "size"],
   methods: {
     ...mapActions("cart", ["updateCart"]),
-    async addOneToCart(){
+    async addOneToCart() {
       const payload = {
-        action: 'add',
-        device : this.$cookies.get("device"),
+        action: "add",
+        device: this.$cookies.get("device"),
         productId: this.id,
         size: this.size,
-        quantity: 1
-      }
+        quantity: 1,
+      };
       await this.updateCart(payload);
     },
-    async removeOneFromCart(){
+    async removeOneFromCart() {
       const payload = {
-        action: 'remove',
-        device : this.$cookies.get("device"),
+        action: "remove",
+        device: this.$cookies.get("device"),
         productId: this.id,
         size: this.size,
-        quantity: 1
-      }
+        quantity: 1,
+      };
       await this.updateCart(payload);
     },
-    async deleteFromCart(){
+    async deleteFromCart() {
       const payload = {
-        action: 'delete',
-        device : this.$cookies.get("device"),
+        action: "delete",
+        device: this.$cookies.get("device"),
         productId: this.id,
         size: this.size,
-        quantity: this.quantity
-      }
+        quantity: this.quantity,
+      };
       await this.updateCart(payload);
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .header-border {
   border-bottom: 1px solid var(--light-grey);
   padding-bottom: 5px;
@@ -82,13 +82,14 @@ export default {
   height: 30px;
 }
 
-.btn-danger:focus, .btn-danger:active {
+.btn-danger:focus,
+.btn-danger:active {
   background: var(--danger);
   outline: none !important;
   box-shadow: none !important;
 }
 
-.btn:active{
+.btn:active {
   background: black;
 }
 </style>

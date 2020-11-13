@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex justify-content-center align-items-center flex-column">
-    <div class="max-width-1400">
+  <div class="container">
+    <base-card class="max-width-720">
       <h1 class="text-uppercase font-secondary font-weight-normal text-center">
         Register
       </h1>
@@ -42,11 +42,10 @@
           </div>
         </div>
       </div>
-
       <button class="btn btn-block btn-success" @click="registerUser()">
         Register
       </button>
-    </div>
+    </base-card>
   </div>
 </template>
 
@@ -77,5 +76,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

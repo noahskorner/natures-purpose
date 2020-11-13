@@ -1,19 +1,19 @@
 <template>
-  <div class="d-flex justify-content-center align-items-center flex-column">
-    <div class="max-width-1400">
+  <div class="container">
+    <base-card class="max-width-720">
       <h1 class="text-uppercase font-secondary font-weight-normal text-center">
-        Login
+        login
       </h1>
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="username">Username or Email</label>
+            <label for="username">Username</label>
             <input
               type="text"
               class="form-control"
               id="username"
               v-model="username"
-              placeholder="Enter username or email"
+              placeholder="Enter username"
             />
           </div>
         </div>
@@ -34,8 +34,12 @@
       <button class="btn btn-block btn-success" @click="loginUser()">
         Login
       </button>
-      <router-link to="/register">Register</router-link>
-    </div>
+
+      <p class="mt-3 text-muted">
+        Don't have an account?
+        <router-link :to="'/register'">Register here</router-link>
+      </p>
+    </base-card>
   </div>
 </template>
 
@@ -45,7 +49,7 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
     };
   },
   methods: {
@@ -53,16 +57,14 @@ export default {
     async loginUser() {
       const payload = {
         username: this.username,
-        password: this.password
+        password: this.password,
       };
 
-      await this.login(payload)
-        .then()
-        .then(this.$router.push("/order"));
-    }
-  }
+      await this.login(payload).then().then(this.$router.push("/order"));
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
 </style>
