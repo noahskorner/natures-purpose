@@ -10,13 +10,13 @@ const apiClient = axios.create({
 });
 export default {
   getProducts() {
-    return apiClient.get("/get-products/");
+    return apiClient.get("/store/get-products/");
   },
   getCart(payload) {
-    return apiClient.post("/get-cart/", payload);
+    return apiClient.post("/store/get-cart/", payload);
   },
   updateCart(payload) {
-    return apiClient.post("/update-cart/", payload);
+    return apiClient.post("/store/update-cart/", payload);
   },
   login(payload) {
     return apiClient.post("/auth/login/", payload);
