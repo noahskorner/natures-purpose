@@ -40,7 +40,7 @@ export default {
       config.headers["Authorization"] = `Token ${token}`;
     }
 
-    return axios.post("https://npdelivered-backend.herokuapp.com/auth/logout/", null, config);
+    return axios.post("https://npdelivered-backend.herokuapp.com/store/auth/logout/", null, config);
     
   },
 };
