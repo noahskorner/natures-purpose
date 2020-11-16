@@ -39,7 +39,6 @@ export default {
     async addOneToCart() {
       const payload = {
         action: "add",
-        device: this.$cookies.get("device"),
         productId: this.id,
         size: this.size,
         quantity: 1,
@@ -49,7 +48,6 @@ export default {
     async removeOneFromCart() {
       const payload = {
         action: "remove",
-        device: this.$cookies.get("device"),
         productId: this.id,
         size: this.size,
         quantity: 1,
@@ -59,7 +57,6 @@ export default {
     async deleteFromCart() {
       const payload = {
         action: "delete",
-        device: this.$cookies.get("device"),
         productId: this.id,
         size: this.size,
         quantity: this.quantity,

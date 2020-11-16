@@ -2,7 +2,7 @@ import axios from "axios";
 import Vue from "vue";
 
 const apiClient = axios.create({
-  baseURL: "https://npdelivered-backend.herokuapp.com",
+  baseURL: "http://localhost:8000",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -19,10 +19,10 @@ export default {
     return apiClient.post("/store/update-cart/", payload);
   },
   login(payload) {
-    return apiClient.post("/auth/login/", payload);
+    return apiClient.post("/store/auth/login/", payload);
   },
   register(payload) {
-    return apiClient.post("/auth/register/", payload);
+    return apiClient.post("/store/auth/register/", payload);
   },
   logout() {
     // Get token from state
@@ -40,7 +40,6 @@ export default {
       config.headers["Authorization"] = `Token ${token}`;
     }
 
-    return axios.post("https://npdelivered-backend.herokuapp.com/store/auth/logout/", null, config);
-    
+    return axios.post("http://localhost:8000/store/auth/logout/", null, config);
   },
 };

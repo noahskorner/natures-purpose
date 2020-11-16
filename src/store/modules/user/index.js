@@ -7,8 +7,9 @@ export default {
   namespaced: true,
   state() {
     return {
-      isAuthenticated: cookie.get('auth'),
-      auth: cookie.get('auth')
+      isAuthenticated: (cookie.get('isAuthenticated') == 'true'),
+      auth: cookie.get('auth'),
+      device: cookie.get('device')
     };
   },
   actions,

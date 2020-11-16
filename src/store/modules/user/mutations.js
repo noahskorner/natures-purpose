@@ -5,7 +5,7 @@ export default {
         Vue.$cookies.set('isAuthenticated', true);
         Vue.$cookies.set('auth', payload);
         state.isAuthenticated = true;
-        state.auth = payload.auth;
+        state.auth = payload;
     },
     logout(state) {
         state.isAuthenticated = false;

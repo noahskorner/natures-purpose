@@ -83,7 +83,6 @@ export default {
     async addToCart(){
       const payload = {
         action: 'add',
-        device : this.$cookies.get("device"),
         productId: this.id,
         size: this.size,
         quantity: 1

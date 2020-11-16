@@ -9,7 +9,6 @@ export default {
       return;
     }
     // Commit the mutation
-
     context.commit("login", data)
   },
   async register(context, payload) {

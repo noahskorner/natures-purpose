@@ -4,12 +4,15 @@
       <div class="w-100 d-none d-md-block" @click="toggleShowCart()"></div>
       <div class="cart border-left d-flex flex-column justify-content-start position-relative">
         <div class="w-100">
-          <div class="d-flex justify-content-between bg-cream">
-            <h3
+          <div class="d-flex justify-content-between bg-cream header">
+            <div class="d-flex justify-content-center align-items-center">
+                          <h3
               class="m-2 ml-4 font-secondary text-uppercase font-weight-normal"
             >
               Cart
             </h3>
+            </div>
+
             <button class="btn" @click="toggleShowCart()">
               <i class="fas fa-times fa-2x"></i>
             </button>
@@ -53,8 +56,7 @@ export default {
     ...mapActions("cart", ["toggleShowCart", "loadCart"]),
   },
   async mounted() {
-    const payload = { device: this.$cookies.get("device") };
-    await this.loadCart(payload);
+    await this.loadCart();
   },
 };
 </script>
@@ -73,6 +75,10 @@ export default {
   background-color: white;
   min-height: 100vh;
   width: 100%;
+}
+
+.header{
+  height: 4rem;
 }
 
 .cart-items {
