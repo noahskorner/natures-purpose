@@ -2,15 +2,17 @@
   <section>
     <div class="modal d-flex justify-content-between">
       <div class="w-100 d-none d-md-block" @click="toggleShowCart()"></div>
-      <div class="cart border-left d-flex flex-column justify-content-start position-relative">
+      <div
+        class="cart border-left d-flex flex-column justify-content-start position-relative"
+      >
         <div class="w-100">
           <div class="d-flex justify-content-between bg-cream header">
             <div class="d-flex justify-content-center align-items-center">
-                          <h3
-              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal"
-            >
-              Cart
-            </h3>
+              <h3
+                class="m-2 ml-4 font-secondary text-uppercase font-weight-normal"
+              >
+                Cart
+              </h3>
             </div>
 
             <button class="btn" @click="toggleShowCart()">
@@ -77,7 +79,7 @@ export default {
   width: 100%;
 }
 
-.header{
+.header {
   height: 4rem;
 }
 
@@ -85,7 +87,7 @@ export default {
   overflow-y: scroll;
 }
 
-.checkout-btn{
+.checkout-btn {
   bottom: 0;
 }
 

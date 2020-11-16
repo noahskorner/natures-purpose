@@ -29,7 +29,6 @@ export default {
       device: Vue.$cookies.get('device')
     }
 
-    console.log(payload)
     let { status, data } = await API.updateCart(payload);
 
     if (status !== 200) {

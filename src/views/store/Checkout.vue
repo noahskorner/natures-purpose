@@ -4,9 +4,40 @@
       <base-card>
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
+            Affiliate Delivery
+          </h4>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1"
+              >Please select an affiliate delivery (if applicable)</label
+            >
+            <button
+              type="button"
+              class="btn pl-1"
+              data-toggle="popover"
+              title="Popover title"
+              data-content="And here's some amazing content. It's very engaging. Right?"
+            >
+              <i class="fas fa-info-circle"></i>
+            </button>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect1"
+              v-model="affiliate"
+            >
+              <option value="None" selected>None</option>
+              <option value="affiliateId">
+                Lifetime Fitness (204 Rainbow Rd.)
+              </option>
+              <option value="affiliateId">Gold's Gym (777 Nunya Rd.)</option>
+              <option value="affiliateId">Mikey's Gym (707 Mike Dr.)</option>
+            </select>
+          </div>
+          <hr />
+        </div>
+        <div class="w-full" v-if="affiliate == 'None'">
+          <h4 class="font-secondary text-uppercase font-weight-normal">
             Delivery address
           </h4>
-          <hr />
           <div
             class="d-flex flex-column justify-content-center align-items-center"
           >
@@ -28,7 +59,7 @@
                 <input
                   type="email"
                   class="form-control"
-                  id="address"
+                  id="email"
                   placeholder="Enter apt. number"
                   required
                 />
@@ -55,7 +86,6 @@
               </div>
             </div>
           </div>
-          <hr />
         </div>
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
@@ -79,9 +109,8 @@
               </button>
             </div>
           </div>
-          <hr />
         </div>
-        <div class="w-full">
+        <div class="w-full mt-3">
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Delivery info
           </h4>
@@ -123,41 +152,62 @@
               />
             </div>
           </div>
-
-          <hr />
         </div>
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Order detail
           </h4>
-          <hr />
+          <hr>
+                    <div class="d-flex justify-content-between">
+            <h6>Name</h6>
+            <h6>Quantity</h6>
+            <h6>Size</h6>
+            <h6>Unit Price</h6>
+          </div>
+          <div v-for="item in getCart.order_items" :key="item.id" class="d-flex justify-content-between">
+            <p class="d-inline-block">{{ item.product.name }}</p>
+            <p class="d-inline-block">{{ item.quantity }}</p>
+            <p class="d-inline-block">{{ item.size.name }}</p>
+            <p class="d-inline-block">{{ item.size.price }}</p>
+          </div>
         </div>
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
-            Pay $10.00
+            Pay ${{ cartTotal }}
           </h4>
-          <hr />
+          <hr>
         </div>
-            <button
-      class="btn btn-block font-secondary btn-success font-lg"
-    >
-      Place order
-    </button>
+        <button class="btn btn-block font-secondary btn-success font-lg">
+          Place order
+        </button>
       </base-card>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
-  methods: {
-    ...mapActions("cart", ["toggleShowCart", "toggleDisableCart"])
+  computed: {
+    ...mapGetters("cart", ["getCart"]),
+    cartTotal() {
+      const total = parseFloat(this.getCart.cart_total)
+      return total.toFixed(2)
+    }
   },
-  mounted() {
+  methods: {
+    ...mapActions("cart", ["toggleShowCart", "toggleDisableCart", "loadCart"]),
+  },
+  async mounted() {
+    await this.loadCart();
     this.toggleShowCart();
     this.toggleDisableCart();
-  }
+  },
+  data() {
+    return {
+      affiliate: "None",
+    };
+  },
 };
 </script>
 

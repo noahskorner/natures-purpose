@@ -44,4 +44,13 @@ body {
 a {
   text-decoration: none;
 }
+
+#app{
+  overflow-x: hidden
+}
+
+.btn:focus, .btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
 </style>
