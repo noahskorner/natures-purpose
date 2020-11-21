@@ -32,6 +32,10 @@
   background-color: var(--light-brown);
 }
 
+.bg-white{
+  background-color: #ffffff;
+}
+
 .btn:focus,
 .btn:active {
   outline: none !important;

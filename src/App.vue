@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    
     <the-sidebar v-if="showSidebar" @toggle-sidebar="toggleSidebar()"></the-sidebar>
     <the-header @toggle-sidebar="toggleSidebar()"/>
     <router-view />
@@ -53,4 +54,5 @@ a {
   outline: none !important;
   box-shadow: none !important;
 }
+
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="product-card col-xl-3 col-md-4 col-sm-6 col-12 p-sm-2 p-0">
     <div
-      class="text-center h-100 d-flex flex-column justify-content-between"
+      class="text-center h-100 d-flex flex-column justify-content-between card"
       v-if="windowWidth > 575"
     >
       <router-link
@@ -20,38 +20,28 @@
       </router-link>
       <div>
         <div class="d-flex align-items-center justify-content-center">
-          <div class="d-flex align-items-center justify-content-start">
-            <div class="font-sm font-secondary font-weight-normal">Size:</div>
+          <h6 class="my-auto ml-1">${{ size.price.toFixed(2) }}</h6>
+        </div>
+        <div class="d-flex justify-content-around mb-3">
+          <div>
             <button
               v-for="(sizeObj, index) in sizes"
               :key="index"
-              class="btn btn-outline-success btn-sm mx-1 size-btn text-uppercase"
+              class="btn btn-outline-dark btn-sm mx-1 size-btn text-uppercase"
               :class="getSizeBtnClass(sizeObj.id)"
               @click="selectSize(sizeObj)"
             >
               {{ sizeObj.name.charAt(0) }}
             </button>
           </div>
-          <h6 class="my-auto ml-1">${{ size.price.toFixed(2) }}</h6>
-        </div>
-        <div class="justify-content-between mt-1">
-          <router-link
-            tag="button"
-            class="btn btn-dark btn-sm mx-1"
-            :to="{
-              name: link,
-              params: { name: convertToKebabCase(name), id: id },
-            }"
-            >View</router-link
-          >
+
           <button class="btn btn-success btn-sm mx-1" @click="addToCart()">
             Add to Cart
           </button>
         </div>
       </div>
     </div>
-    <!-- Mobile -->
-    <base-card class="m-0" v-else>
+    <div v-else class="bg-white border-bottom">
       <router-link
         tag="div"
         class="link"
@@ -62,47 +52,52 @@
       >
         <div class="row">
           <div class="col-3">
-            <img :src="imageURL" :alt="name + 'Image'" />
+            <img :src="imageURL" :alt="name + 'Image'" class="my-2 ml-4" />
           </div>
           <div class="col-9 text-left">
-            <h6
-              class="text-uppercase mt-1 mb-0 font-secondary font-weight-normal"
-            >
-              {{ name }}
-            </h6>
-            <p class="font-sm font-italic mb-1">with {{ recipeStr(id) }}</p>
-            <div>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center justify-content-center">
-                  <div class="font-sm font-secondary font-weight-normal">
-                    Size:
+            <div class="h-100 d-flex flex-column justify-content-between">
+              <!-- Text -->
+              <div>
+                <div class="d-flex justify-content-between">
+                  <h6
+                    class="text-uppercase mt-2 mb-0 font-secondary font-weight-normal"
+                  >
+                    {{ name }}
+                  </h6>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <h6 class="my-auto mr-4">${{ size.price.toFixed(2) }}</h6>
                   </div>
+                </div>
+
+                <p class="font-sm font-italic mb-1">with {{ recipeStr(id) }}</p>
+              </div>
+
+              <!-- Buttons -->
+              <div class="d-flex justify-content-between mb-2">
+                <div>
                   <button
                     v-for="(sizeObj, index) in sizes"
                     :key="index"
-                    class="btn btn-outline-success btn-sm mx-1 size-btn text-uppercase"
+                    class="btn btn-outline-dark btn-sm mx-1 size-btn text-uppercase"
                     :class="getSizeBtnClass(sizeObj.id)"
-                    @click="selectSize(sizeObj)"
+                    @click.prevent="selectSize(sizeObj)"
                   >
                     {{ sizeObj.name.charAt(0) }}
                   </button>
                 </div>
-                <h6 class="my-auto ml-1">${{ size.price.toFixed(2) }}</h6>
-              </div>
-              <div class="d-flex justify-content-end">
-                                              <button
-                  class="btn btn-success btn-sm mx-1"
-                  @click="addToCart()"
+
+                <button
+                  class="btn btn-success btn-sm mx-4"
+                  @click.prevent="addToCart()"
                 >
                   Add to Cart
                 </button>
               </div>
-
             </div>
           </div>
         </div>
       </router-link>
-    </base-card>
+    </div>
   </div>
 </template>
 
@@ -169,11 +164,14 @@ export default {
 }
 img {
   width: 100%;
-  border-radius: 8px;
 }
 
 .size-btn {
   height: 30px;
   width: 30px;
+}
+
+.card {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 }
 </style>

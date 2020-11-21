@@ -1,6 +1,6 @@
 
   <template>
-  <section>
+  <section style="z-index: 100;">
     <div class="modal d-flex justify-content-between">
       <div
         class="menu border-right d-flex flex-column justify-content-start position-relative"
@@ -79,7 +79,7 @@ export default {
 .menu {
   background-color: white;
   min-height: 100vh;
-  width: 100%;
+  width: 50%;
 }
 
 .header {

@@ -1,12 +1,12 @@
 <template>
   <section>
     <!-- Product Grid -->
-    <product-grid>
+    <product-grid class="px-4">
       <template #header>
         <h1 class="text-uppercase font-secondary font-weight-normal">Order</h1>
       </template>
       <template #products>
-        <div class="product-card col-xl-3 col-md-4 col-sm-6 col-12 p-2">
+        <div class="product-card col-xl-3 col-md-4 col-6 p-2">
           <div
             class="text-center h-100 d-flex flex-column justify-content-between"
           >
@@ -25,7 +25,7 @@
             </router-link>
           </div>
         </div>
-        <div class="product-card col-xl-3 col-md-4 col-sm-6 col-12 p-2">
+        <div class="product-card col-xl-3 col-md-4 col-6 p-2">
           <div
             class="text-center h-100 d-flex flex-column justify-content-between"
           >
@@ -44,7 +44,7 @@
             </router-link>
           </div>
         </div>
-        <div class="product-card col-xl-3 col-md-4 col-sm-6 col-12 p-2">
+        <div class="product-card col-xl-3 col-md-4 col-6 p-2">
           <div
             class="text-center h-100 d-flex flex-column justify-content-between"
           >
@@ -63,7 +63,7 @@
             </router-link>
           </div>
         </div>
-        <div class="product-card col-xl-3 col-md-4 col-sm-6 col-12 p-2">
+        <div class="product-card col-xl-3 col-md-4 col-6 p-2">
           <div
             class="text-center h-100 d-flex flex-column justify-content-between"
           >
@@ -82,7 +82,7 @@
             </router-link>
           </div>
         </div>
-        <div class="product-card col-xl-3 col-md-4 col-sm-6 col-12 p-2">
+        <div class="product-card col-xl-3 col-md-4 col-6 p-2">
           <div
             class="text-center h-100 d-flex flex-column justify-content-between"
           >
@@ -101,7 +101,7 @@
             </router-link>
           </div>
         </div>
-        <div class="product-card col-xl-3 col-md-4 col-sm-6 col-12 p-2">
+        <div class="product-card col-xl-3 col-md-4 col-6 p-2">
           <div
             class="text-center h-100 d-flex flex-column justify-content-between"
           >

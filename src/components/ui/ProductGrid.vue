@@ -1,5 +1,5 @@
 <template>
-  <div class="product-grid mx-auto text-center px-4">
+  <div class="product-grid mx-auto text-center px-sm-4 px-0">
     <slot name="header"/>
     <slot name="filters" />
     <div class="row">
