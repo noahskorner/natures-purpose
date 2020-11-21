@@ -2,7 +2,7 @@ import axios from "axios";
 import Vue from "vue";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://npdelivered-backend.herokuapp.com",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -40,6 +40,22 @@ export default {
       config.headers["Authorization"] = `Token ${token}`;
     }
 
-    return axios.post("http://localhost:8000/store/auth/logout/", null, config);
+    return axios.post("https://npdelivered-backend.herokuapp.com/store/auth/logout/", null, config);
+  },
+  getAffiliates() {
+    return apiClient.get("/store/get-affiliates/");
+  },
+  placeOrder(orderDetails) {
+    // Get auth from cookies
+    const auth = Vue.$cookies.get("auth");
+    const device = Vue.$cookies.get("device");
+
+    const payload = {
+      auth,
+      device,
+      orderDetails
+    }
+
+    return apiClient.post("/store/place-order/", payload);
   },
 };

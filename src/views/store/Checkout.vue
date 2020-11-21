@@ -2,6 +2,7 @@
   <div class="d-flex flex-column justify-content-start align-items-center">
     <div class="col-lg-10 col-12 max-width-720">
       <base-card>
+        <!-- Affiliate form -->
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Affiliate Delivery
@@ -24,17 +25,20 @@
               id="exampleFormControlSelect1"
               v-model="affiliate"
             >
-              <option value="None" selected>None</option>
-              <option value="affiliateId">
-                Lifetime Fitness (204 Rainbow Rd.)
+              <option value="-1" selected>None</option>
+              <option
+                v-for="affiliate in getAffiliates"
+                :key="affiliate.id"
+                :value="affiliate.id"
+              >
+                {{ affiliate.name }} ({{ affiliate.delivery_address.address1 }})
               </option>
-              <option value="affiliateId">Gold's Gym (777 Nunya Rd.)</option>
-              <option value="affiliateId">Mikey's Gym (707 Mike Dr.)</option>
             </select>
           </div>
           <hr />
         </div>
-        <div class="w-full" v-if="affiliate == 'None'">
+        <!-- Delivery Address Form -->
+        <div class="w-full" v-if="affiliate == '-1'">
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Delivery address
           </h4>
@@ -46,6 +50,7 @@
               <div class="form-group col-md-9 col-12 pr-1 p-0">
                 <label for="address">Address</label>
                 <input
+                  v-model="address"
                   type="text"
                   class="form-control"
                   id="address"
@@ -57,9 +62,10 @@
               <div class="form-group col-md-3 col-12 pl-1 p-0">
                 <label for="address">Apt Number</label>
                 <input
+                  v-model="unitNumber"
                   type="email"
                   class="form-control"
-                  id="email"
+                  id="unit-number"
                   placeholder="Enter apt. number"
                   required
                 />
@@ -67,7 +73,7 @@
               <!-- City -->
               <div class="form-group col-9 pr-1 p-0">
                 <label for="city">City</label>
-                <select class="form-control" id="city" required>
+                <select class="form-control" id="city" v-model="city" required>
                   <option>Tempe</option>
                   <option>Scottsdale</option>
                   <option>Glendale</option>
@@ -87,6 +93,7 @@
             </div>
           </div>
         </div>
+        <!-- Delivery Day Form -->
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Delivery day
@@ -110,6 +117,7 @@
             </div>
           </div>
         </div>
+        <!-- Delivery Info Form -->
         <div class="w-full mt-3">
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Delivery info
@@ -122,6 +130,7 @@
             <div class="form-group w-100">
               <label for="name">Name</label>
               <input
+                v-model="name"
                 type="text"
                 class="form-control"
                 id="name"
@@ -133,6 +142,7 @@
             <div class="form-group w-100">
               <label for="phone">Phone Number</label>
               <input
+                v-model="phone"
                 type="tel"
                 class="form-control"
                 id="phone"
@@ -144,6 +154,7 @@
             <div class="form-group w-100">
               <label for="email">Email Address</label>
               <input
+                v-model="email"
                 type="email"
                 class="form-control"
                 id="email"
@@ -157,14 +168,18 @@
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Order detail
           </h4>
-          <hr>
-                    <div class="d-flex justify-content-between">
+          <hr />
+          <div class="d-flex justify-content-between">
             <h6>Name</h6>
             <h6>Quantity</h6>
             <h6>Size</h6>
             <h6>Unit Price</h6>
           </div>
-          <div v-for="item in getCart.order_items" :key="item.id" class="d-flex justify-content-between">
+          <div
+            v-for="item in getCart.order_items"
+            :key="item.id"
+            class="d-flex justify-content-between"
+          >
             <p class="d-inline-block">{{ item.product.name }}</p>
             <p class="d-inline-block">{{ item.quantity }}</p>
             <p class="d-inline-block">{{ item.size.name }}</p>
@@ -173,11 +188,11 @@
         </div>
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
-            Pay ${{ cartTotal }}
+            Pay $
           </h4>
-          <hr>
+          <hr />
         </div>
-        <button class="btn btn-block font-secondary btn-success font-lg">
+        <button class="btn btn-block font-secondary btn-success font-lg" @click="createOrder()">
           Place order
         </button>
       </base-card>
@@ -187,26 +202,45 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import API from "../../services/API"
 export default {
+  data() {
+    return {
+      affiliate: "-1",
+      // deliveryDay:
+      address: "",
+      unitNumber: "",
+      city: "",
+      name: "",
+      phone: "",
+      email: "",
+    };
+  },
   computed: {
     ...mapGetters("cart", ["getCart"]),
-    cartTotal() {
-      const total = parseFloat(this.getCart.cart_total)
-      return total.toFixed(2)
-    }
+    ...mapGetters("checkout", ["getAffiliates"]),
   },
   methods: {
     ...mapActions("cart", ["toggleShowCart", "toggleDisableCart", "loadCart"]),
+    ...mapActions("checkout", ["loadAffiliates"]),
+    createOrder() {
+      const payload = {
+        affiliate: this.affiliate,
+        address: this.address,
+        unitNumber: this.unitNumber,
+        city: this.city,
+        name: this.name,
+        phone: this.phone,
+        email: this.email,
+      };
+      API.placeOrder(payload)
+    },
   },
   async mounted() {
     await this.loadCart();
     this.toggleShowCart();
     this.toggleDisableCart();
-  },
-  data() {
-    return {
-      affiliate: "None",
-    };
+    await this.loadAffiliates();
   },
 };
 </script>
