@@ -54,6 +54,7 @@ export default {
   },
   methods: {
     ...mapActions("user", ["login"]),
+    ...mapActions("cart", ["loadCart"]),
     async loginUser() {
       const payload = {
         username: this.username,

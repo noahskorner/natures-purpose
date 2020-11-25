@@ -2,6 +2,9 @@
   <section class="mx-auto p-2">
     <!-- PUT TAGS HERE -->
     <div class="row" v-if="selectedProduct !== null">
+      <div class="col-12">
+        <button class="btn btn-outline-success disabled" v-for="tag in selectedProduct.tags" :key="tag.name" >{{ tag.name }}</button>
+      </div>
       <div class="col-lg-5 col-sm-6 col-12">
         <img :src="selectedProduct.imageURL" alt="" />
         <!-- Macros -->

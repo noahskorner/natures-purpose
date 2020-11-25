@@ -32,7 +32,7 @@
             <router-link
               tag="div"
               class="link"
-              :to="'#'"
+              :to="'/custom-meals/'"
             >
               <img src="https://picsum.photos/300/300" alt="none" />
               <h6
@@ -51,7 +51,7 @@
             <router-link
               tag="div"
               class="link"
-              :to="'#'"
+              :to="'/just-protein/'"
             >
               <img src="https://picsum.photos/300/300" alt="none" />
               <h6
@@ -70,7 +70,7 @@
             <router-link
               tag="div"
               class="link"
-              :to="'#'"
+              :to="'/just-sides/'"
             >
               <img src="https://picsum.photos/300/300" alt="none" />
               <h6
@@ -89,7 +89,7 @@
             <router-link
               tag="div"
               class="link"
-              :to="'#'"
+              :to="'/soups/'"
             >
               <img src="https://picsum.photos/300/300" alt="none" />
               <h6
@@ -108,7 +108,7 @@
             <router-link
               tag="div"
               class="link"
-              :to="'#'"
+              :to="'/sauces/'"
             >
               <img src="https://picsum.photos/300/300" alt="none" />
               <h6
