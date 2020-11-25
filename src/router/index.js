@@ -57,6 +57,7 @@ const routes = [
   },
   {
     path: "/signature-meals/:name/:id",
+    name: 'signature-meals',
     props: true,
     component: Product
   },
