@@ -1,6 +1,7 @@
 import API from "../../../services/API.js";
 import Vue from "vue";
 import cookie from "vue-cookies";
+import router from '@/router/index.js'
 
 export default {
   namespaced: true,
@@ -22,6 +23,7 @@ export default {
       }
       // Commit the mutation
       context.commit("login", data);
+      context.dispatch("cart/loadCart", {}, { root: true });
     },
     async register(context, payload) {
       // Make the API call
@@ -46,6 +48,8 @@ export default {
       }
       // Commit the mutation
       context.commit("logout");
+      context.dispatch("cart/loadCart", {}, { root: true });
+      router.push('/')
     },
   },
   getters: {

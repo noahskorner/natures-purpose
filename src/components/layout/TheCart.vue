@@ -7,11 +7,16 @@
       >
         <div class="w-100">
           <div class="d-flex justify-content-between bg-cream header">
-            <div class="d-flex justify-content-center align-items-center">
+            <div class="d-flex flex-col justify-content-center align-items-center">
               <h3
-                class="m-2 ml-4 font-secondary text-uppercase font-weight-normal"
+                class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
               >
                 Cart
+              </h3>
+              <h3
+                class="m-2 font-secondary text-uppercase font-weight-normal align-middle"
+              >
+               {{ getCart.cart_num_items }}
               </h3>
             </div>
 
@@ -31,13 +36,29 @@
             :size="item.size"
           />
         </div>
+        <div class="mb-5"></div>
 
-        <button
-          class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary position-absolute checkout-btn"
-          @click="$router.push('/checkout')"
+        <div
+          class="position-absolute checkout-section w-100 bg-cream border-top"
         >
-          Checkout
-        </button>
+          <div class="d-flex justify-content-between align-items-center">
+            <h3
+              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Total:
+            </h3>
+            <h3 class="font-weight-normal font-secondary pt-2">
+              ${{ parseFloat(getCart.cart_total).toFixed(2) }}
+            </h3>
+          </div>
+
+          <button
+            class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary"
+            @click="$router.push('/checkout')"
+          >
+            Checkout
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -87,8 +108,9 @@ export default {
   overflow-y: scroll;
 }
 
-.checkout-btn {
+.checkout-section {
   bottom: 0;
+  z-index: 10;
 }
 
 @media (min-width: 768px) {

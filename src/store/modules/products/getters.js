@@ -7,6 +7,11 @@ export default {
       product => product.product_type === "Signature"
     );
   },
+  getJustProteinMeals(state) {
+    return state.products.filter(
+      product => product.product_type === "Just Protein"
+    );
+  },
   getRecipeStr: state => id => {
     const product = state.products.find(product => product.id === id);
     var recipesStr = "";

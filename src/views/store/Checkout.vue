@@ -188,7 +188,7 @@
         </div>
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
-            Pay $
+            Pay $ {{ parseFloat(getCart.cart_total).toFixed(2) }}
           </h4>
           <hr />
         </div>
