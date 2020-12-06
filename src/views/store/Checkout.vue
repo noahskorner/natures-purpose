@@ -25,7 +25,7 @@
               id="exampleFormControlSelect1"
               v-model="affiliate"
             >
-              <option value="-1" selected>None</option>
+              <option :value="-1" selected>None</option>
               <option
                 v-for="affiliate in getAffiliates"
                 :key="affiliate.id"
@@ -38,7 +38,7 @@
           <hr />
         </div>
         <!-- Delivery Address Form -->
-        <div class="w-full" v-if="affiliate == '-1'">
+        <div class="w-full" v-if="affiliate == -1">
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Delivery address
           </h4>
@@ -54,19 +54,19 @@
                   type="text"
                   class="form-control"
                   id="address"
-                  placeholder="Enter address"
+                  placeholder="Enter Address"
                   required
                 />
               </div>
               <!-- Apartment Number -->
               <div class="form-group col-md-3 col-12 pl-1 p-0">
-                <label for="address">Apt Number</label>
+                <label for="unit-">Unit Number</label>
                 <input
                   v-model="unitNumber"
                   type="email"
                   class="form-control"
                   id="unit-number"
-                  placeholder="Enter apt. number"
+                  placeholder="Enter Unit number"
                   required
                 />
               </div>
@@ -206,8 +206,8 @@ import API from "../../services/API"
 export default {
   data() {
     return {
-      affiliate: "-1",
-      // deliveryDay:
+      affiliate: -1,
+      deliveryDate: "",
       address: "",
       unitNumber: "",
       city: "",
@@ -217,15 +217,31 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("cart", ["getCart"]),
-    ...mapGetters("checkout", ["getAffiliates"]),
+    ...mapGetters("cart", ["getCart", "cartContainsCustom"]),
+    ...mapGetters("checkout", ["getAffiliates", "getDeliveryDays"]),
   },
   methods: {
     ...mapActions("cart", ["toggleShowCart", "toggleDisableCart", "loadCart"]),
-    ...mapActions("checkout", ["loadAffiliates"]),
+    ...mapActions("checkout", ["loadAffiliates", "loadDeliveryDays"]),
+    getDeliveryDayType() {
+      // check for affiliate delivery days
+      if(this.affiliate === -1) {
+        // check for custom delivery days
+        if(this.cartContainsCustom){
+          return this.getDeliveryDays.custom_delivery_days
+        }
+        else return this.getDeliveryDays.signature_delivery_days
+      }
+      else return this.getDeliveryDays.affiliate_delivery_days
+    },
+    getValidDeliveryDays() {
+      const date = new Date();
+      return date;
+    },
     createOrder() {
       const payload = {
         affiliate: this.affiliate,
+        deliveryDate: this.deliveryDate,
         address: this.address,
         unitNumber: this.unitNumber,
         city: this.city,
@@ -241,6 +257,7 @@ export default {
     this.toggleShowCart();
     this.toggleDisableCart();
     await this.loadAffiliates();
+    await this.loadDeliveryDays();
   },
 };
 </script>

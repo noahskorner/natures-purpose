@@ -1,7 +1,7 @@
 <template>
   <div class="w-full d-flex flex-column mx-4 my-2">
     <div class="d-flex justify-content-between">
-      <h6 class="header-border">{{ name }}</h6>
+      <h6 class="header-border pr-0">{{ name }}</h6>
       <h6>$ {{ size.price }}</h6>
     </div>
     <div>

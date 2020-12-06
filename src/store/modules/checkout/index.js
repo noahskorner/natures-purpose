@@ -1,9 +1,17 @@
-import API from '@/services/API.js'
+import API from "@/services/API.js";
 
 export default {
   namespaced: true,
   state() {
-    return { affiliates: {} };
+    return { affiliates: {}, deliveryDays: {} };
+  },
+  getters: {
+    getAffiliates(state) {
+      return state.affiliates;
+    },
+    getDeliveryDays(state) {
+      return state.deliveryDays;
+    }
   },
   actions: {
     async loadAffiliates(context) {
@@ -13,17 +21,24 @@ export default {
         console.log("Network Error");
         return;
       }
-      context.commit('setAffiliates', data)
+      context.commit("setAffiliates", data);
+    },
+    async loadDeliveryDays(context) {
+      let { status, data } = await API.getDeliveryDays();
+
+      if (status !== 200) {
+        console.log("Network Error");
+        return;
+      }
+      context.commit("setDeliveryDays", data);
     },
   },
-  getters: {
-      getAffiliates(state) {
-          return state.affiliates;
-      }
-  },
   mutations: {
-      setAffiliates(state, payload) {
-          state.affiliates = payload
-      }
+    setAffiliates(state, payload) {
+      state.affiliates = payload;
+    },
+    setDeliveryDays(state, payload) {
+      state.deliveryDays = payload;
+    }
   },
 };

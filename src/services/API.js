@@ -1,8 +1,10 @@
 import axios from "axios";
 import Vue from "vue";
 
+const baseURL = "https://npdelivered-backend.herokuapp.com"
+
 const apiClient = axios.create({
-  baseURL: "https://npdelivered-backend.herokuapp.com",
+  baseURL: baseURL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -40,7 +42,7 @@ export default {
       config.headers["Authorization"] = `Token ${token}`;
     }
 
-    return axios.post("https://npdelivered-backend.herokuapp.com/store/auth/logout/", null, config);
+    return axios.post(`${baseURL}/store/auth/logout/`, null, config);
   },
   getAffiliates() {
     return apiClient.get("/store/get-affiliates/");
@@ -58,4 +60,7 @@ export default {
 
     return apiClient.post("/store/place-order/", payload);
   },
+  getDeliveryDays() {
+    return apiClient.get("/store/get-delivery-days/")
+  }
 };
