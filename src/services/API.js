@@ -44,9 +44,6 @@ export default {
 
     return axios.post(`${baseURL}/store/auth/logout/`, null, config);
   },
-  getAffiliates() {
-    return apiClient.get("/store/get-affiliates/");
-  },
   placeOrder(orderDetails) {
     // Get auth from cookies
     const auth = Vue.$cookies.get("auth");
@@ -60,7 +57,7 @@ export default {
 
     return apiClient.post("/store/place-order/", payload);
   },
-  getDeliveryDays() {
-    return apiClient.get("/store/get-delivery-days/")
+  getCheckoutInformation() {
+    return apiClient.get("/store/get-checkout-information/")
   }
 };

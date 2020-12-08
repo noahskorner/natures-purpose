@@ -5,6 +5,7 @@
       @toggle-sidebar="toggleSidebar()"
     ></the-sidebar>
     <the-header @toggle-sidebar="toggleSidebar()" />
+    <the-alert></the-alert>
     <router-view />
     <the-cart v-show="getShowCart" />
   </div>
@@ -14,12 +15,14 @@
 import TheSidebar from "./components/layout/TheSidebar";
 import TheHeader from "./components/layout/TheHeader";
 import TheCart from "@/components/layout/TheCart.vue";
+import TheAlert from "@/components/layout/TheAlert.vue";
 import { mapGetters } from "vuex";
 export default {
   components: {
     TheSidebar,
     TheHeader,
     TheCart,
+    TheAlert
   },
   data() {
     return {
@@ -68,4 +71,13 @@ a {
   outline: none !important;
   box-shadow: none !important;
 }
+
+h1,h2,h3,h4,h5,h6 {
+  margin-bottom: 0 !important;
+}
+
+  button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
 </style>

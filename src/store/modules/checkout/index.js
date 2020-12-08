@@ -3,7 +3,7 @@ import API from "@/services/API.js";
 export default {
   namespaced: true,
   state() {
-    return { affiliates: {}, deliveryDays: {} };
+    return { affiliates: {}, deliveryDays: {}, cutoffDay: "", cutoffTime: ""};
   },
   getters: {
     getAffiliates(state) {
@@ -11,26 +11,27 @@ export default {
     },
     getDeliveryDays(state) {
       return state.deliveryDays;
-    }
+    },
+    getCutoffDay(state) {
+      return state.cutoffDay;
+    },
+    getCutoffTime(state) {
+      return state.cutoffTime;
+    },
   },
   actions: {
-    async loadAffiliates(context) {
-      let { status, data } = await API.getAffiliates();
+    async loadCheckoutInformation(context) {
+      let { status, data } = await API.getCheckoutInformation();
 
       if (status !== 200) {
         console.log("Network Error");
-        return;
+        return {};
       }
-      context.commit("setAffiliates", data);
-    },
-    async loadDeliveryDays(context) {
-      let { status, data } = await API.getDeliveryDays();
-
-      if (status !== 200) {
-        console.log("Network Error");
-        return;
-      }
-      context.commit("setDeliveryDays", data);
+      
+      context.commit('setAffiliates', data.affiliates);
+      context.commit('setDeliveryDays', data.delivery_days);
+      context.commit('setCutoffDay', data.cutoff_day);
+      context.commit('setCutoffTime', data.cutoff_time);
     },
   },
   mutations: {
@@ -39,6 +40,12 @@ export default {
     },
     setDeliveryDays(state, payload) {
       state.deliveryDays = payload;
-    }
+    },
+    setCutoffDay(state, payload) {
+      state.cutoffDay = payload;
+    },
+    setCutoffTime(state, payload) {
+      state.cutoffTime = payload;
+    },
   },
 };

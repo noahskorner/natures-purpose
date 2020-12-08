@@ -10,13 +10,14 @@ import ProductGrid from "./components/ui/ProductGrid.vue";
 import BaseCard from "./components/ui/BaseCard.vue";
 import UUID, { uuid } from "vue-uuid";
  
+
+ 
 Vue.config.productionTip = false;
 Vue.component("product-card", ProductCard);
 Vue.component("product-grid", ProductGrid);
 Vue.component("base-card", BaseCard);
 Vue.use(VueCookies);
 Vue.use(UUID);
-
 // set default config
 Vue.$cookies.config('14d')
 

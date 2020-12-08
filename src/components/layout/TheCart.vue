@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="$route.path !== '/checkout'">
     <div
       class="modal d-flex justify-content-between"
       :style="{ height: windowHeight }"
@@ -44,16 +44,51 @@
         <div
           class="position-absolute checkout-section w-100 bg-cream border-top"
         >
+        <!-- Number of items -->
           <div class="d-flex justify-content-between align-items-center">
-            <h3
+            <h6
               class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
             >
               Items:
-            </h3>
-            <h3 class="font-weight-normal font-secondary pt-2 pr-4">
+            </h6>
+            <h6 class="font-weight-normal font-secondary pt-2 pr-4">
               {{ getCart.cart_num_items }}
-            </h3>
+            </h6>
           </div>
+        <!-- Sub total -->
+          <div class="d-flex justify-content-between align-items-center">
+            <h6
+              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Sub Total:
+            </h6>
+            <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+              ${{ parseFloat(getCart.sub_total).toFixed(2) }}
+            </h6>
+          </div>
+        <!-- Shipping -->
+          <div class="d-flex justify-content-between align-items-center">
+            <h6
+              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Delivery:
+            </h6>
+            <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+              ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
+            </h6>
+          </div>
+        <!-- Shipping -->
+          <div class="d-flex justify-content-between align-items-center">
+            <h6
+              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Tax:
+            </h6>
+            <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+              ${{ parseFloat(getCart.tax_total).toFixed(2) }}
+            </h6>
+          </div>
+          <!-- Total -->
           <div
             class="d-flex justify-content-between align-items-center border-top"
           >
@@ -93,10 +128,11 @@ export default {
     CartItem,
   },
   computed: {
-    ...mapGetters("cart", ["getCart"]),
+    ...mapGetters("cart", ["getCart"])
   },
   methods: {
     ...mapActions("cart", ["toggleShowCart", "loadCart"]),
+    ...mapActions("products", ["loadProducts"]),
     onResize() {
       this.windowHeight = window.innerHeight;
     },
@@ -106,6 +142,7 @@ export default {
       window.addEventListener("resize", this.onResize);
     });
     await this.loadCart();
+    await this.loadProducts();
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.onResize);
@@ -128,7 +165,7 @@ export default {
 }
 
 .header {
-  height: 4rem;
+  height: 5rem;
 }
 
 .cart-items {

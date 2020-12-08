@@ -3,7 +3,17 @@
     <!-- PUT TAGS HERE -->
     <div class="row" v-if="selectedProduct !== null">
       <div class="col-12">
-        <button class="btn btn-outline-success disabled" v-for="tag in selectedProduct.tags" :key="tag.name" >{{ tag.name }}</button>
+        <div
+          v-for="tag in selectedProduct.tags"
+          :key="tag.name"
+          class="position-relative d-inline-block mr-1"
+        >
+          <button
+            class="btn btn-outline-success btn-sm"
+          >
+            {{ tag.name }}
+          </button>
+        </div>
       </div>
       <div class="col-lg-5 col-sm-6 col-12">
         <img :src="selectedProduct.imageURL" alt="" />

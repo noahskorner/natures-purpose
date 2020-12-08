@@ -1,11 +1,11 @@
 <template>
   <div class="w-full d-flex flex-column mx-4 my-2">
     <div class="d-flex justify-content-between">
-      <h6 class="header-border pr-0">{{ name }}</h6>
+      <h6 class="pr-0">{{ name }}</h6>
       <h6>$ {{ size.price }}</h6>
     </div>
-    <div>
-      <p class="font-italic">with Grilled Chicken, Brown Rice, and Broccoli</p>
+    <div class="">
+      <p class="font-italic">with {{ getRecipeStr()(id)}}</p>
     </div>
     <div class="d-flex justify-content-between align-items-center">
       <h6 class="mb-0">{{ size.name }}</h6>
@@ -17,8 +17,10 @@
           <button class="btn btn-dark btn-sm" @click="removeOneFromCart()">
             <i class="fas fa-minus"></i>
           </button>
-          <div class="size-btn-sm d-flex justify-content-center align-items-center">
-              <p class="d-block my-auto">{{ quantity }}</p>
+          <div
+            class="size-btn-sm d-flex justify-content-center align-items-center"
+          >
+            <p class="d-block my-auto">{{ quantity }}</p>
           </div>
           <button class="btn btn-success btn-sm" @click="addOneToCart()">
             <i class="fas fa-plus"></i>
@@ -31,11 +33,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   props: ["id", "name", "quantity", "size"],
   methods: {
+    ...mapGetters("products", ["getRecipeStr"]),
     ...mapActions("cart", ["updateCart"]),
+    ...mapActions("products", ["loadProducts"]),
     async addOneToCart() {
       const payload = {
         action: "add",
@@ -64,6 +68,9 @@ export default {
       await this.updateCart(payload);
     },
   },
+  async mounted() {
+    await this.loadProducts();
+  }
 };
 </script>
 
