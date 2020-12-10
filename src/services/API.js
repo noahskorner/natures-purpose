@@ -1,7 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
 
-const baseURL = "http://localhost:8000"
+const baseURL = "https://npdelivered-backend.herokuapp.com"
 
 const apiClient = axios.create({
   baseURL: baseURL,

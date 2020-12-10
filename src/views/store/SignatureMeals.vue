@@ -13,37 +13,49 @@
           class="w-100 d-flex justify-content-between align-items-center mb-2 px-1"
         >
           <div class="d-flex justify-content-start align-items-center">
-            <div v-if="windowWidth > 768" class="d-flex flex-col align-items-center">
-                          <h6 class="font-secondary text-uppercase h-100 font-weight-normal">
-              Filters: 
-            </h6>
-                          <button
-              class="btn btn-sm btn-outline-success mx-1"
-              v-for="tag in tags"
-              @click="toggleFilter(tag)"
-              :class="getTagClass(tag)"
-              :key="tag"
+            <div
+              v-if="windowWidth > 768"
+              class="d-flex flex-col align-items-center"
             >
-              {{ tag }}
-            </button>
+              <h6
+                class="font-secondary text-uppercase h-100 font-weight-normal"
+              >
+                Filters:
+              </h6>
+              <button
+                class="btn btn-sm btn-outline-success mx-1"
+                v-for="tag in tags"
+                @click="toggleFilter(tag)"
+                :class="getTagClass(tag)"
+                :key="tag"
+              >
+                {{ tag }}
+              </button>
             </div>
             <div v-else class="px-1 text-left">
-            <div class="dropdown">
-              <button class="btn btn-sm btn-outline-dark font-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Filters:
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <p
-                  class="dropdown-item mb-0"
-                  v-for="tag in tags"
-                  @click="toggleFilter(tag)"
-                  :class="getTagClass(tag)"
-                  :key="tag"
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm btn-outline-dark font-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  {{ tag }}
-                        </p>
+                  Filters:
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <p
+                    class="dropdown-item mb-0"
+                    v-for="tag in tags"
+                    @click="toggleFilter(tag)"
+                    :class="getTagClass(tag)"
+                    :key="tag"
+                  >
+                    {{ tag }}
+                  </p>
+                </div>
               </div>
-            </div>
             </div>
           </div>
 
@@ -51,10 +63,10 @@
             class="btn btn-sm btn-outline-danger ml-5 text-nowrap"
             @click="removeFilters()"
           >
-            Remove filters ({{ filters.length}})
+            Remove filters ({{ filters.length }})
           </button>
         </div>
-        <hr>
+        <hr />
       </template>
       <template #products v-if="products.length">
         <product-card
@@ -152,7 +164,8 @@ export default {
 </script>
 
 <style scoped>
-  .dropdown-item:active, .dropdown-item.active{
-    background-color: var(--success) !important;
-  }
+.dropdown-item:active,
+.dropdown-item.active {
+  background-color: var(--success) !important;
+}
 </style>
