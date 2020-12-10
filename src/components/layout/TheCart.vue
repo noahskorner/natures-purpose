@@ -1,6 +1,4 @@
 <template>
-  <section class="position-absolute wrapper">
-    <div class="outside-cart" @click="toggleShowCart()"></div>
     <div
       v-if="$route.path !== '/checkout'"
       class="cart d-flex flex-column justify-content-start position-absolute"
@@ -8,23 +6,15 @@
       :style="{ height: windowHeight + 'px' }"
     >
       <div class="w-100">
-        <div class="d-flex justify-content-between bg-cream header">
-          <div
-            class="d-flex flex-col justify-content-center align-items-center"
-          >
-            <h3
-              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-            >
-              Cart
-            </h3>
-          </div>
-
+        <div class="d-flex justify-content-between align-items-center bg-cream header">
           <button
-            class="btn pr-4 h-100 d-flex justify-content-center align-items-center"
+            class="btn pl-4 h-100 d-flex justify-content-center align-items-center"
             @click="toggleShowCart()"
           >
             <i class="fas fa-times fa-2x"></i>
           </button>
+          <div class="font-secondary text-uppercase pr-4" style="font-size: 2rem;">Cart</div>
+          <div></div>
         </div>
         <div class="hr"></div>
       </div>
@@ -112,7 +102,6 @@
         </button>
       </div>
     </div>
-  </section>
 </template>
 
 <script>
@@ -151,18 +140,6 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-  top: 0;
-}
-
-.outside-cart {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  backdrop-filter: blur(4px);
-}
-
 .cart {
   background-color: white;
   width: 100vw;
