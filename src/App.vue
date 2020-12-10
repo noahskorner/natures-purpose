@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="overlay" v-if="getShowCart || showSidebar" @click="closeOverlay()"> </div>
+    <div class="overlay" v-if="(getShowCart || showSidebar) && $route.path !== '/checkout'" @click="closeOverlay()"> </div>
     <transition name="slide-right">
       <the-sidebar
         v-if="showSidebar"
@@ -11,7 +11,7 @@
     <the-alert></the-alert>
     <router-view />
     <transition name="slide-left">
-      <the-cart v-if="getShowCart" />
+      <the-cart v-if="getShowCart" @close-overlay="closeOverlay()"/>
     </transition>
   </div>
 </template>
