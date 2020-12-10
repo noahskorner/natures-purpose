@@ -37,7 +37,7 @@
                 />
               </div>
               <!-- City -->
-              <div class="form-group col-9 pr-1 p-0">
+              <div class="form-group col-4 pr-1 p-0">
                 <label for="city">City</label>
                 <select class="form-control" id="city" v-model="city" required>
                   <option>Tempe</option>
@@ -46,14 +46,25 @@
                 </select>
               </div>
               <!-- State -->
-              <div class="form-group col-3 pl-1 p-0">
-                <label for="city">State</label>
+              <div class="form-group col-4 pl-1 p-0">
+                <label for="state">State</label>
                 <input
                   class="form-control"
                   type="text"
-                  id="city"
+                  id="state"
                   placeholder="AZ"
                   readonly
+                />
+              </div>
+              <!-- Zip -->
+              <div class="form-group col-4 pl-1 p-0">
+                <label for="zip">Zip</label>
+                <input
+                  v-model="zip"
+                  class="form-control"
+                  type="text"
+                  id="zip"
+                  placeholder="Enter zip"
                 />
               </div>
             </div>
@@ -260,6 +271,7 @@ export default {
       address: "",
       unitNumber: "",
       city: "",
+      zip: "",
       name: "",
       phone: "",
       email: "",
@@ -279,6 +291,7 @@ export default {
         address: this.address,
         unitNumber: this.unitNumber,
         city: this.city,
+        zip: this.zip,
         name: this.name,
         phone: this.phone,
         email: this.email,

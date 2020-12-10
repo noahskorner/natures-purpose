@@ -1,52 +1,72 @@
+<template>
+  <div class="position-absolute">
+    <div
+      class="position-absolute outside-menu"
+      @click="$emit('toggle-sidebar')"
+    ></div>
+    <div
+      class="menu position-relative"
+      :class="windowWidth > 768 ? 'border-right' : 'border-none'"
+      :style="{ height: windowHeight + 'px' }"
+    >
+      <div class="w-100">
+        <div class="d-flex justify-content-between bg-cream header">
+          <div
+            class="d-flex flex-col justify-content-center align-items-center"
+          >
+            <h3
+              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Menu
+            </h3>
+          </div>
 
-  <template>
-  <section style="z-index: 100;">
-    <div class="modal d-flex justify-content-between">
-      <div
-        class="menu border-right d-flex flex-column justify-content-start position-relative"
-      >
-        <div class="w-100">
-          <div class="d-flex justify-content-end bg-cream header">
-            <button class="btn" @click="$emit('toggle-sidebar')">
-              <i class="fas fa-times fa-2x"></i>
-            </button>
-          </div>
-          <div class="hr"></div>
-          <div class="d-flex flex-column justify-content-start align-items-left">
-            <button
-              class="btn link router-link font-secondary font-weight-normal text-left"
-              @click="closeSidebarAndRoute('/order')"
-              >Order</button
-            >
-            <button
-              v-if="!isAuthenticated"
-              class="btn link router-link font-secondary font-weight-normal text-left"
-              @click="closeSidebarAndRoute('/login')"
-              >Login</button
-            >
-            <button
-              v-if="isAuthenticated"
-              class="btn link router-link font-secondary font-weight-normal text-left"
-              @click="closeSidebarAndRoute('/account')"
-              >Account</button
-            >
-          </div>
+          <button
+            class="btn pr-4 h-100 d-flex justify-content-center align-items-center"
+            @click="$emit('toggle-sidebar')"
+          >
+            <i class="fas fa-times fa-2x"></i>
+          </button>
+        </div>
+        <div class="hr"></div>
+      </div>
+      <div class="w-100">
+        <div class="d-flex flex-column justify-content-start align-items-left">
+          <button
+            class="btn link router-link font-secondary font-weight-normal text-left"
+            @click="closeSidebarAndRoute('/order')"
+          >
+            Order
+          </button>
+          <button
+            v-if="!isAuthenticated"
+            class="btn link router-link font-secondary font-weight-normal text-left"
+            @click="closeSidebarAndRoute('/login')"
+          >
+            Login
+          </button>
+          <button
+            v-if="isAuthenticated"
+            class="btn link router-link font-secondary font-weight-normal text-left"
+            @click="closeSidebarAndRoute('/account')"
+          >
+            Account
+          </button>
         </div>
       </div>
-      <div
-        class="w-100 d-none d-md-block"
-        @click="$emit('toggle-sidebar')"
-      ></div>
     </div>
-  </section>
+  </div>
 </template>
-
+  
 <script>
-import { mapGetters } from "vuex"
+import { useWindowSize } from "vue-window-size";
 export default {
-  emits: ["toggle-sidebar"],
-  computed: {
-    ...mapGetters("user", ["isAuthenticated"]),
+  setup() {
+    const { width, height } = useWindowSize();
+    return {
+      windowWidth: width,
+      windowHeight: height,
+    };
   },
   methods: {
     closeSidebarAndRoute(route){
@@ -58,19 +78,21 @@ export default {
 </script>
 
 <style scoped>
-.modal {
-  /** background-color: var(--bg-cream); **/
-  display: block;
-  min-height: 100vh;
-  width: 100vw;
-  position: fixed;
+.outside-menu {
   backdrop-filter: blur(4px);
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
 }
-
 .menu {
   background-color: white;
-  min-height: 100vh;
-  width: 50%;
+  width: 100vw;
+  z-index: 100;
+}
+
+.wrapper {
+  top: 0;
+  left: 0;
 }
 
 .header {
@@ -82,7 +104,6 @@ export default {
   font-size: 2rem;
   margin: 0 1rem;
 }
-
 .link:hover {
   color: var(--success) !important;
   cursor: pointer;

@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <the-sidebar
-      v-if="showSidebar"
-      @toggle-sidebar="toggleSidebar()"
-    ></the-sidebar>
+    <transition name="slide-right">
+      <the-sidebar
+        v-if="showSidebar"
+        @toggle-sidebar="toggleSidebar()"
+      ></the-sidebar>
+    </transition>
     <the-header @toggle-sidebar="toggleSidebar()" />
     <the-alert></the-alert>
     <router-view />
-    <the-cart v-show="getShowCart" />
+    <transition name="slide-left">
+      <the-cart v-if="getShowCart" />
+    </transition>
   </div>
 </template>
 
@@ -52,6 +56,7 @@ body,
 html {
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -63,7 +68,7 @@ a {
 }
 
 #app {
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 .btn:focus,
@@ -80,4 +85,32 @@ h1,h2,h3,h4,h5,h6 {
     outline: none !important;
     box-shadow: none !important;
   }
+
+.slide-right-enter-active{
+  transition: .25s ease-in;
+}
+.slide-right-leave-active{
+  transition: .25s ease-out;
+}
+
+.slide-right-enter {
+  transform: translate(-100%, 0);
+}
+.slide-right-leave-to {
+  transform: translate(-100%, 0);
+}
+
+.slide-left-enter-active{
+  transition: .5s ease-out;
+}
+.slide-left-leave-active{
+  transition: .5s ease-in;
+}
+
+.slide-left-enter {
+  transform: translate(100%, 0);
+}
+.slide-left-leave-to {
+  transform: translate(100%, 0);
+}
 </style>

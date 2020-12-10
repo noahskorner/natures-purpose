@@ -47,10 +47,12 @@ export default {
   placeOrder(orderDetails) {
     // Get auth from cookies
     const auth = Vue.$cookies.get("auth");
+    const isAuthenticated = Vue.$cookies.get("isAuthenticated");
     const device = Vue.$cookies.get("device");
 
     const payload = {
       auth,
+      isAuthenticated,
       device,
       orderDetails
     }

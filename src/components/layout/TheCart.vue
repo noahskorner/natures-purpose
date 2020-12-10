@@ -1,114 +1,115 @@
 <template>
-  <section v-if="$route.path !== '/checkout'">
+  <section class="position-absolute wrapper">
+    <div class="outside-cart" @click="toggleShowCart()"></div>
     <div
-      class="modal d-flex justify-content-between"
-      :style="{ height: windowHeight }"
+      v-if="$route.path !== '/checkout'"
+      class="cart d-flex flex-column justify-content-start position-absolute"
+      :class="windowWidth > 768 ? 'border-left' : 'border-none'"
+      :style="{ height: windowHeight + 'px' }"
     >
-      <div class="w-100 d-none d-md-block" @click="toggleShowCart()"></div>
-      <div
-        class="cart border-left d-flex flex-column justify-content-start position-relative"
-      >
-        <div class="w-100">
-          <div class="d-flex justify-content-between bg-cream header">
-            <div
-              class="d-flex flex-col justify-content-center align-items-center"
-            >
-              <h3
-                class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-              >
-                Cart
-              </h3>
-            </div>
-
-            <button
-              class="btn pr-4 h-100 d-flex justify-content-center align-items-center"
-              @click="toggleShowCart()"
-            >
-              <i class="fas fa-times fa-2x"></i>
-            </button>
-          </div>
-          <div class="hr"></div>
-        </div>
-        <div class="cart-items w-100 mb-5">
-          <cart-item
-            v-for="item in getCart.order_items"
-            :key="item.id"
-            :id="item.product.id"
-            :name="item.product.name"
-            :quantity="item.quantity"
-            :size="item.size"
-          />
-        </div>
-        <div class="mb-5"></div>
-
-        <div
-          class="position-absolute checkout-section w-100 bg-cream border-top"
-        >
-        <!-- Number of items -->
-          <div class="d-flex justify-content-between align-items-center">
-            <h6
-              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-            >
-              Items:
-            </h6>
-            <h6 class="font-weight-normal font-secondary pt-2 pr-4">
-              {{ getCart.cart_num_items }}
-            </h6>
-          </div>
-        <!-- Sub total -->
-          <div class="d-flex justify-content-between align-items-center">
-            <h6
-              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-            >
-              Sub Total:
-            </h6>
-            <h6 class="font-weight-normal font-secondary pt-2 pr-4">
-              ${{ parseFloat(getCart.sub_total).toFixed(2) }}
-            </h6>
-          </div>
-        <!-- Shipping -->
-          <div class="d-flex justify-content-between align-items-center">
-            <h6
-              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-            >
-              Delivery:
-            </h6>
-            <h6 class="font-weight-normal font-secondary pt-2 pr-4">
-              ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
-            </h6>
-          </div>
-        <!-- Shipping -->
-          <div class="d-flex justify-content-between align-items-center">
-            <h6
-              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-            >
-              Tax:
-            </h6>
-            <h6 class="font-weight-normal font-secondary pt-2 pr-4">
-              ${{ parseFloat(getCart.tax_total).toFixed(2) }}
-            </h6>
-          </div>
-          <!-- Total -->
+      <div class="w-100">
+        <div class="d-flex justify-content-between bg-cream header">
           <div
-            class="d-flex justify-content-between align-items-center border-top"
+            class="d-flex flex-col justify-content-center align-items-center"
           >
             <h3
               class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
             >
-              Total:
-            </h3>
-            <h3 class="font-weight-normal font-secondary pt-2 pr-4">
-              ${{ parseFloat(getCart.cart_total).toFixed(2) }}
+              Cart
             </h3>
           </div>
 
           <button
-            class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary"
-            @click="$router.push('/checkout')"
+            class="btn pr-4 h-100 d-flex justify-content-center align-items-center"
+            @click="toggleShowCart()"
           >
-            Checkout
+            <i class="fas fa-times fa-2x"></i>
           </button>
         </div>
+        <div class="hr"></div>
+      </div>
+      <div
+        class="cart-items w-100"
+        :style="{ marginBottom: checkoutSectionHeight + 'px' }"
+      >
+        <cart-item
+          v-for="item in getCart.order_items"
+          :key="item.id"
+          :id="item.product.id"
+          :name="item.product.name"
+          :quantity="item.quantity"
+          :size="item.size"
+        />
+      </div>
+
+      <div
+        class="position-absolute checkout-section w-100 bg-cream border-top"
+        ref="checkoutSection"
+      >
+        <!-- Number of items -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h6
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Items:
+          </h6>
+          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+            {{ getCart.cart_num_items }}
+          </h6>
+        </div>
+        <!-- Sub total -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h6
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Sub Total:
+          </h6>
+          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+            ${{ parseFloat(getCart.sub_total).toFixed(2) }}
+          </h6>
+        </div>
+        <!-- Shipping -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h6
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Delivery:
+          </h6>
+          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+            ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
+          </h6>
+        </div>
+        <!-- Shipping -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h6
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Tax:
+          </h6>
+          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+            ${{ parseFloat(getCart.tax_total).toFixed(2) }}
+          </h6>
+        </div>
+        <!-- Total -->
+        <div
+          class="d-flex justify-content-between align-items-center border-top"
+        >
+          <h3
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Total:
+          </h3>
+          <h3 class="font-weight-normal font-secondary pt-2 pr-4">
+            ${{ parseFloat(getCart.cart_total).toFixed(2) }}
+          </h3>
+        </div>
+
+        <button
+          class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary"
+          @click="$router.push('/checkout')"
+        >
+          Checkout
+        </button>
       </div>
     </div>
   </section>
@@ -116,52 +117,58 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { useWindowSize } from "vue-window-size";
 // import { router } from 'vue-router';
 import CartItem from "../ui/CartItem";
 export default {
-  data() {
+  setup() {
+    const { width, height } = useWindowSize();
     return {
-      windowHeight: window.innerHeight,
+      windowWidth: width,
+      windowHeight: height,
+      checkoutSectionHeight: 0,
     };
   },
   components: {
     CartItem,
   },
   computed: {
-    ...mapGetters("cart", ["getCart"])
+    ...mapGetters("cart", ["getCart"]),
   },
   methods: {
     ...mapActions("cart", ["toggleShowCart", "loadCart"]),
     ...mapActions("products", ["loadProducts"]),
-    onResize() {
-      this.windowHeight = window.innerHeight;
+    getCheckoutSectionHeight() {
+      this.checkoutSectionHeight = this.$refs.checkoutSection.clientHeight;
     },
   },
   async mounted() {
-    this.$nextTick(() => {
-      window.addEventListener("resize", this.onResize);
-    });
     await this.loadCart();
     await this.loadProducts();
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.onResize);
+    this.getCheckoutSectionHeight();
   },
 };
 </script>
 
 <style scoped>
-.modal {
-  /** background-color: var(--bg-cream); **/
-  display: block;
+.wrapper {
+  top: 0;
+}
+
+.outside-cart {
   width: 100vw;
-  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
   backdrop-filter: blur(4px);
 }
 
 .cart {
   background-color: white;
-  width: 100%;
+  width: 100vw;
+  z-index: 100;
+  right: 0;
+  top: 0;
 }
 
 .header {
