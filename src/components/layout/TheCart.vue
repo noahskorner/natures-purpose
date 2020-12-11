@@ -98,7 +98,7 @@
 
       <button
         class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary"
-        @click="closeCartAndRoute()"
+        @click="closeCartAndRoute('/checkout')"
       >
         Checkout
       </button>
@@ -132,9 +132,10 @@ export default {
     getCheckoutSectionHeight() {
       this.checkoutSectionHeight = this.$refs.checkoutSection.clientHeight;
     },
-    closeCartAndRoute() {
-      this.$router.push('/checkout');
-    },
+    closeCartAndRoute(route){
+      this.toggleShowCart();
+      this.$router.push(route)
+    }
   },
   async mounted() {
     await this.loadCart();
