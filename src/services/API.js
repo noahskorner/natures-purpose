@@ -1,7 +1,10 @@
 import axios from "axios";
 import Vue from "vue";
 
+// connecting to local server
 const baseURL = "http://localhost:8000"
+// connecting to remote server
+// const baseURL = "https://npdelivered-backend.herokuapp.com"
 
 const apiClient = axios.create({
   baseURL: baseURL,
