@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 alert-wrapper">
+  <div class="w-100 alert-wrapper mt-2">
     <div class="mx-2">
       <div
         v-for="(alert, index) in getAlerts"
@@ -36,9 +36,4 @@ export default {
 </script>
 
 <style scoped>
-.alert-wrapper {
-  position: absolute;
-  top: 8rem;
-  z-index: 10;
-}
 </style>

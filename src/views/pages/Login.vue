@@ -5,15 +5,31 @@
         login
       </h1>
       <div class="row">
+        <div class="col-12" v-if="error">
+          <div
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            {{ error }}
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
         <div class="col-12">
           <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">Username or Email</label>
             <input
               type="text"
               class="form-control"
               id="username"
               v-model="username"
-              placeholder="Enter username"
+              placeholder="Enter username or email"
             />
           </div>
         </div>
@@ -45,23 +61,39 @@
 
 <script>
 import { mapActions } from "vuex";
+import API from "@/services/API.js";
 export default {
   data() {
     return {
       username: "",
       password: "",
+      error: "",
     };
   },
   methods: {
     ...mapActions("user", ["login"]),
     ...mapActions("cart", ["loadCart"]),
     async loginUser() {
+      this.error = "";
       const payload = {
         username: this.username,
         password: this.password,
       };
-
-      await this.login(payload);
+      try {
+        // Make the API call
+        const { status, data } = await API.login(payload);
+        // Ensure we called it successfully
+        if (status !== 200) {
+          console.error("Network Error");
+          return;
+        }
+        // Commit the mutation (logged in successfully)
+        this.login(data);
+        return;
+      } catch {
+        this.error = "Invalid username or password.";
+        return;
+      }
     },
   },
 };

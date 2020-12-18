@@ -102,10 +102,10 @@ button:focus {
 }
 
 .slide-right-enter-active {
-  transition: 0.5s ease-in;
+  transition: 0.3s ease-out;
 }
 .slide-right-leave-active {
-  transition: 0.5s ease-out;
+  transition: 0.3s ease-in;
 }
 
 .slide-right-enter {
@@ -116,10 +116,10 @@ button:focus {
 }
 
 .slide-left-enter-active {
-  transition: 0.5s ease-out;
+  transition: 0.3s ease-out;
 }
 .slide-left-leave-active {
-  transition: 0.5s ease-in;
+  transition: 0.3s ease-in;
 }
 
 .slide-left-enter {

@@ -14,6 +14,7 @@ const apiClient = axios.create({
   },
 });
 export default {
+  baseURL: baseURL,
   getProducts() {
     return apiClient.get("/store/get-products/");
   },
@@ -25,9 +26,6 @@ export default {
   },
   login(payload) {
     return apiClient.post("/store/auth/login/", payload);
-  },
-  register(payload) {
-    return apiClient.post("/store/auth/register/", payload);
   },
   logout() {
     // Get token from state

@@ -14,38 +14,9 @@ export default {
   },
   actions: {
     async login(context, payload) {
-      try {
-        // Make the API call
-        const { status, data } = await API.login(payload);
-        // Ensure we called it successfully
-        if (status !== 200) {
-          console.error("Network Error");
-          return;
-        }
-        // Commit the mutation (logged in successfully)
-        context.commit("login", data);
-        context.dispatch("cart/loadCart", {}, { root: true });
-        return;
-      } catch {
-        const error = {
-          message: "Invalid username or password.",
-          color: "alert-danger",
-        };
-        context.dispatch("alert/addAlert", error, { root: true });
-        return;
-      }
-    },
-    async register(context, payload) {
-      // Make the API call
-      const { status, data } = await API.register(payload);
-      // Ensure we called it successfully
-      if (status !== 200) {
-        console.error("Network Error");
-        return;
-      }
-      // This does nothing after registering the user (for now)
-
-      console.log(data);
+      // Commit the mutation (logged in successfully)
+      context.commit("login", payload);
+      context.dispatch("cart/loadCart", {}, { root: true });
     },
     async logout(context) {
       // Make the API call
