@@ -1,29 +1,39 @@
 import API from "../../../services/API.js";
 import Vue from "vue";
 import cookie from "vue-cookies";
-import router from '@/router/index.js'
+import router from "@/router/index.js";
 
 export default {
   namespaced: true,
   state() {
     return {
-      isAuthenticated: cookie.get("isAuthenticated") == "true",
+      isAuthenticated: false,
       auth: cookie.get("auth"),
       device: cookie.get("device"),
     };
   },
   actions: {
     async login(context, payload) {
-      // Make the API call
-      const { status, data } = await API.login(payload);
-      // Ensure we called it successfully
-      if (status !== 200) {
-        console.error("Network Error");
+      try {
+        // Make the API call
+        const { status, data } = await API.login(payload);
+        // Ensure we called it successfully
+        if (status !== 200) {
+          console.error("Network Error");
+          return;
+        }
+        // Commit the mutation (logged in successfully)
+        context.commit("login", data);
+        context.dispatch("cart/loadCart", {}, { root: true });
+        return;
+      } catch {
+        const error = {
+          message: "Invalid username or password.",
+          color: "alert-danger",
+        };
+        context.dispatch("alert/addAlert", error, { root: true });
         return;
       }
-      // Commit the mutation
-      context.commit("login", data);
-      context.dispatch("cart/loadCart", {}, { root: true });
     },
     async register(context, payload) {
       // Make the API call
@@ -49,7 +59,7 @@ export default {
       // Commit the mutation
       context.commit("logout");
       context.dispatch("cart/loadCart", {}, { root: true });
-      router.push('/')
+      router.push("/");
     },
   },
   getters: {
@@ -65,15 +75,14 @@ export default {
   },
   mutations: {
     login(state, payload) {
-      Vue.$cookies.set("isAuthenticated", true);
       Vue.$cookies.set("auth", payload);
       state.isAuthenticated = true;
       state.auth = payload;
+      router.push("/order");
     },
     logout(state) {
       state.isAuthenticated = false;
       state.auth = "";
-      Vue.$cookies.set("isAuthenticated", false);
       Vue.$cookies.set("auth", "");
     },
   },

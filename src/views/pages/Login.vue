@@ -61,7 +61,7 @@ export default {
         password: this.password,
       };
 
-      await this.login(payload).then().then(this.$router.push("/order"));
+      await this.login(payload);
     },
   },
 };

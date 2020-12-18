@@ -9,7 +9,7 @@ export default {
   },
   async loadCart(context) {
     const payload = {
-      isAuthenticated: Vue.$cookies.get('isAuthenticated'),
+      isAuthenticated: store.getters['user/isAuthenticated'],
       auth: store.getters['user/getAuth'],
       device: Vue.$cookies.get('device')
     }
@@ -24,7 +24,7 @@ export default {
   async updateCart(context, order){
     const payload = {
       order: order,
-      isAuthenticated: Vue.$cookies.get('isAuthenticated'),
+      isAuthenticated: store.getters['user/isAuthenticated'],
       auth: store.getters['user/getAuth'],
       device: Vue.$cookies.get('device')
     }

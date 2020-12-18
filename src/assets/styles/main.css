@@ -50,6 +50,10 @@
   max-width: 1440px !important;
 }
 
+.max-width-960 {
+  max-width: 960px !important;
+}
+
 .max-width-720 {
   max-width: 720px !important;
 }

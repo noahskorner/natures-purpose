@@ -44,6 +44,7 @@
   
 <script>
 import { useWindowSize } from "vue-window-size";
+import { mapGetters } from "vuex"
 export default {
   setup() {
     const { width, height } = useWindowSize();
@@ -51,6 +52,9 @@ export default {
       windowWidth: width,
       windowHeight: height,
     };
+  },
+  computed: {
+    ...mapGetters('user', ['isAuthenticated'])
   },
   methods: {
     closeSidebarAndRoute(route){
