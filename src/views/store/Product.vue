@@ -18,30 +18,25 @@
         <!-- Macros -->
         <base-card>
           <h4 class="font-secondary font-weight-normal">Macros</h4>
+          <hr class="my-2" />
           <div class="d-flex justify-content-around">
             <div
-              class="d-flex flex-column justify-content-center align-items-center mt-3"
+              class="d-flex flex-column justify-content-center align-items-center"
             >
-              <h4>{{ size.macro_protein.toFixed(2) }}g</h4>
-              <p class="font-secondary text-uppercase font-weight-light">
-                Protein
-              </p>
+              <h4 class="m-0 p-0">{{ size.macro_protein.toFixed(2) }}g</h4>
+              <p class="font-weight-light text-left m-0">Protein</p>
             </div>
-            <div class="border-right"></div>
             <div
-              class="d-flex flex-column justify-content-center align-items-center mt-3"
+              class="d-flex flex-column justify-content-center align-items-center"
             >
-              <h4>{{ size.macro_carbs.toFixed(2) }}g</h4>
-              <p class="font-secondary text-uppercase font-weight-light">
-                carbs
-              </p>
+              <h4 class="m-0 p-0">{{ size.macro_carbs.toFixed(2) }}g</h4>
+              <p class="font-weight-light m-0">Carbs</p>
             </div>
-            <div class="border-left"></div>
             <div
-              class="d-flex flex-column justify-content-center align-items-center mt-3"
+              class="d-flex flex-column justify-content-center align-items-center"
             >
-              <h4>{{ size.macro_fat.toFixed(2) }}g</h4>
-              <p class="font-secondary text-uppercase font-weight-light">fat</p>
+              <h4 class="m-0 p-0">{{ size.macro_fat.toFixed(2) }}g</h4>
+              <p class="font-weight-light m-0">Fat</p>
             </div>
           </div>
         </base-card>
@@ -51,10 +46,10 @@
           <h4 class="font-secondary font-weight-normal">
             {{ selectedProduct.name }}
           </h4>
-          <hr class="mt-0" />
-          <p class="font-italic">with {{ getRecipeStr(selectedProduct.id) }}</p>
+          <p class="font-italic m-0 font-weight-light">with {{ getRecipeStr(selectedProduct.id) }}</p>
+          <hr class="mb-0 mt-1" />
           <div class="my-2">
-            <h6>Select size:</h6>
+            <h6 class="font-weight-normal font-secondary">Size:</h6>
             <button
               v-for="size in selectedProduct.sizes"
               :key="size.id"
@@ -65,27 +60,27 @@
             </button>
           </div>
           <div class="my-2">
-            <h6>Quantity:</h6>
+            <h6 class="font-weight-normal font-secondary">Qty:</h6>
             <div class="btn-group mt-2">
-              <button class="btn btn-dark" @click="quantityDown()">
+              <button class="btn btn-sm btn-dark" @click="quantityDown()">
                 <i class="fas fa-minus"></i>
               </button>
-              <div class="size-btn-lg text-center">
-                <div class="pt-2">{{ quantity }}</div>
+              <div class="size-btn-lg text-center d-flex justify-content-center align-items-center">
+                <div>{{ quantity }}</div>
               </div>
-              <button class="btn btn-success" @click="quantityUp()">
+              <button class="btn btn-sm btn-success" @click="quantityUp()">
                 <i class="fas fa-plus"></i>
               </button>
             </div>
           </div>
           <div class="my-2 d-flex justify-start">
             <div class="mr-5">
-              <h6>Weight:</h6>
-              <h4 class="my-2">{{ size.weight }}oz</h4>
+              <h6 class="font-weight-light">Weight:</h6>
+              <h4 class="my-2 font-weight-normal">{{ size.weight }}oz</h4>
             </div>
             <div>
-              <h6>Unit Price:</h6>
-              <h4 class="my-2">${{ size.price.toFixed(2) }}</h4>
+              <h6 class="font-weight-light">Unit Price:</h6>
+              <h4 class="my-2 font-weight-normal">${{ size.price.toFixed(2) }}</h4>
             </div>
           </div>
           <button
@@ -98,7 +93,8 @@
         <!-- Ingredients -->
         <base-card>
           <h4 class="font-secondary font-weight-normal">Ingredients</h4>
-          <p>{{ getIngredientStr(selectedProduct.id) }}</p>
+          <hr class="my-2"> 
+          <p class="font-italic font-weight-light">{{ getIngredientStr(selectedProduct.id) }}</p>
         </base-card>
       </div>
     </div>
@@ -116,7 +112,7 @@ export default {
     return {
       selectedProduct: null,
       quantity: 1,
-      size: null
+      size: null,
     };
   },
   computed: {
@@ -188,17 +184,17 @@ h6 {
 }
 
 .size-btn-lg {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
 
 .tag {
-  background-color:#cff0cc;
+  background-color: #cff0cc;
   padding: 3px 7px;
   color: black;
   border-radius: 10px;
-  font-size: .75rem;
-  margin: .15rem;
+  font-size: 0.75rem;
+  margin: 0.15rem;
   min-width: 25px;
   text-align: center;
 }

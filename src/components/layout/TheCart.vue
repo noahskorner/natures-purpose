@@ -2,7 +2,6 @@
   <div
     v-if="$route.path !== '/checkout'"
     class="cart d-flex flex-column justify-content-start position-absolute"
-    :class="windowWidth > 768 ? 'border-left' : 'border-none'"
     :style="{ height: windowHeight + 'px' }"
   >
     <div class="w-100">

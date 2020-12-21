@@ -1,7 +1,6 @@
 <template>
   <div
     class="menu position-absolute"
-    :class="windowWidth > 768 ? 'border-right' : 'border-none'"
     :style="{ height: windowHeight + 'px' }"
   >
     <div class="w-100">
