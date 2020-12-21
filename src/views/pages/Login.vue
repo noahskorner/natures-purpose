@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import API from "@/services/API.js";
 export default {
   data() {
@@ -69,6 +69,9 @@ export default {
       password: "",
       error: "",
     };
+  },
+  computed: {
+    ...mapGetters["user", ["isAuthenticated"]]
   },
   methods: {
     ...mapActions("user", ["login"]),
@@ -96,6 +99,11 @@ export default {
       }
     },
   },
+  mounted() {
+    if(this.isAuthenticated){
+      this.$router.push('/account')
+    }
+  }
 };
 </script>
 

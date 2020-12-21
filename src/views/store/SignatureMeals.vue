@@ -22,15 +22,17 @@
               >
                 Filters:
               </h6>
-              <button
-                class="btn btn-sm btn-outline-success mx-1"
-                v-for="tag in tags"
-                @click="toggleFilter(tag)"
-                :class="getTagClass(tag)"
-                :key="tag"
-              >
-                {{ tag }}
-              </button>
+              <div class="text-left">
+                <button
+                  class="btn btn-sm btn-outline-success m-1"
+                  v-for="tag in tags"
+                  @click="toggleFilter(tag)"
+                  :class="getTagClass(tag)"
+                  :key="tag"
+                >
+                  {{ tag }}
+                </button>
+              </div>
             </div>
             <div v-else class="px-1 text-left">
               <div class="dropdown">

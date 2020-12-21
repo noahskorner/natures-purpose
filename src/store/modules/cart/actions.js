@@ -14,12 +14,15 @@ export default {
       device: Vue.$cookies.get('device')
     }
     let { status, data } = await API.getCart(payload);
+    console.log(payload)
+    console.log(data)
 
     if (status !== 200) {
       console.log("Network Error");
       return;
     }
     context.commit("setCart", data);
+    return;
   },
   async updateCart(context, order){
     const payload = {

@@ -7,7 +7,7 @@
           <h4 class="font-secondary text-uppercase font-weight-normal">
             Delivery address
           </h4>
-          <hr>
+          <hr />
           <div
             class="d-flex flex-column justify-content-center align-items-center"
           >
@@ -77,12 +77,14 @@
           </h4>
           <hr />
           <div class="row">
-            <div
-              v-for="(day, index) in deliveryDays"
-              :key="index"
-              class="col-md-4 col-12"
-            >
-              <button class="btn btn-block btn-outline-success my-1" @click="selectDeliveryDate(deliveryDaysUnformatted[index])" :class="getDeliveryDayClass(deliveryDaysUnformatted[index])">
+            <div class="text-left mx-2">
+              <button
+                class="btn btn-outline-success m-1"
+                v-for="(day, index) in deliveryDays"
+                :key="index"
+                @click="selectDeliveryDate(deliveryDaysUnformatted[index])"
+                :class="getDeliveryDayClass(deliveryDaysUnformatted[index])"
+              >
                 {{ day }}
               </button>
             </div>
@@ -146,11 +148,11 @@
                 <th scope="col">Product</th>
                 <th scope="col">Size</th>
                 <th scope="col">Qty.</th>
-                <th scope="col" class="text-right" >Unit Price</th>
+                <th scope="col" class="text-right">Unit Price</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in orderItems" :key="item.id">
+              <tr v-for="item in getCart.order_items" :key="item.id">
                 <td>{{ item.product.name }}</td>
                 <td>{{ item.size.name }}</td>
                 <td>{{ item.quantity }}</td>
@@ -162,23 +164,31 @@
                 <th scope="col">Subtotal</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
-                <th scope="col" class="font-weight-normal text-right">${{ parseFloat(subTotal).toFixed(2) }}</th>
+                <th scope="col" class="font-weight-normal text-right">
+                  ${{ parseFloat(getCart.sub_total).toFixed(2) }}
+                </th>
               </tr>
               <tr>
                 <th scope="col">Delivery</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
-                <th scope="col" class="font-weight-normal text-right">${{ parseFloat(shippingTotal).toFixed(2) }}</th>
+                <th scope="col" class="font-weight-normal text-right">
+                  ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
+                </th>
               </tr>
               <tr>
                 <th scope="col">Tax</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
-                <th scope="col" class="font-weight-normal text-right">${{ parseFloat(taxTotal).toFixed(2) }}</th>
+                <th scope="col" class="font-weight-normal text-right">
+                  ${{ parseFloat(getCart.tax_total).toFixed(2) }}
+                </th>
               </tr>
             </tfoot>
           </table>
-          <p v-if="deliveryDate !== ''">Your meals will be delivered on {{ formatDay(deliveryDate) }}</p>
+          <p v-if="deliveryDate !== ''">
+            Your meals will be delivered on {{ formatDay(deliveryDate) }}
+          </p>
         </div>
         <!-- Payment -->
         <div class="w-full">
@@ -188,15 +198,28 @@
           <hr />
           <div class="row mx-1">
             <!-- Card Number -->
+            <div class="form-group col-12 p-0">
+              <label for="cc-number">Card Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="cc-number"
+                placeholder="Enter card number"
+                v-model="cardNumber"
+                required
+              />
+            </div>
+            <!-- Expiration -->
             <div class="form-group col-9 pr-1 p-0">
-            <label for="cc-number">Card Number</label>
-            <input
-              type="text"
-              class="form-control"
-              id="cc-number"
-              placeholder="Enter card number"
-              required
-            />
+              <label for="expiration">Expiration</label>
+              <input
+                type="text"
+                class="form-control"
+                id="expiration"
+                v-model="expirationDate"
+                placeholder="MM/YY"
+                required
+              />
             </div>
             <!-- CVC Number -->
             <div class="form-group col-3 pl-1 p-0">
@@ -204,37 +227,9 @@
               <input
                 type="text"
                 class="form-control"
+                v-model="cardCode"
                 id="cvc-number"
                 placeholder="CVC"
-                required
-              />
-            </div>
-            <!-- Month -->
-            <div class="form-group col-6 pr-1 p-0">
-                <label for="month">Month</label>
-                <select class="form-control" id="month" required>
-                  <option>January</option>
-                  <option>February</option>
-                  <option>March</option>
-                  <option>April</option>
-                  <option>May</option>
-                  <option>June</option>
-                  <option>July</option>
-                  <option>August</option>
-                  <option>September</option>
-                  <option>October</option>
-                  <option>November</option>
-                  <option>December</option>
-                </select>
-              </div>
-            <!-- Year -->
-            <div class="form-group col-6 pl-1 p-0">
-              <label for="year">Year</label>
-              <input
-                type="text"
-                class="form-control"
-                id="year"
-                placeholder="YYYY"
                 required
               />
             </div>
@@ -253,18 +248,14 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import moment from 'moment'
+import moment from "moment";
 import API from "../../services/API";
+import constants from '@/constants/index.js'
 export default {
   data() {
     return {
-      subTotal: 0,
-      shippingTotal: 0,
-      taxTotal: 0,
-      cartTotal: 0,
       deliveryDays: [],
       deliveryDaysUnformatted: [],
-      orderItems: [],
       affiliate: -1,
       deliveryDate: "",
       formattedDeliveryDate: "",
@@ -275,15 +266,30 @@ export default {
       name: "",
       phone: "",
       email: "",
+      expirationDate: "",
+      cardNumber: "",
+      cardCode: "",
     };
   },
   computed: {
     ...mapGetters("cart", ["getCart"]),
-    ...mapGetters("checkout", ["getDeliveryDays", "getCutoffDay", "getCutoffTime"])
+    ...mapGetters("checkout", [
+      "getDeliveryDays",
+      "getCutoffDay",
+      "getCutoffTime",
+    ]),
   },
   methods: {
     ...mapActions("cart", ["toggleShowCart", "toggleDisableCart", "loadCart"]),
     ...mapActions("checkout", ["loadAffiliates", "loadCheckoutInformation"]),
+    convertMonthYear() {
+      return (
+        "20" +
+        this.expirationDate.substring(3, 5) +
+        "-" +
+        this.expirationDate.substring(0, 2)
+      );
+    },
     createOrder() {
       const payload = {
         affiliate: this.affiliate,
@@ -295,43 +301,43 @@ export default {
         name: this.name,
         phone: this.phone,
         email: this.email,
+        cardNumber: this.cardNumber,
+        expirationDate: this.convertMonthYear(this.expirationDate),
+        cardCode: this.cardCode,
       };
       API.placeOrder(payload);
     },
-    formatDay(unformattedDay){
+    formatDay(unformattedDay) {
       // day is given in yyyy-mm-dd format
-      const year = Number(unformattedDay.substring(0,4))
-      const month = Number(unformattedDay.substring(5,7))
-      const day = Number(unformattedDay.substring(8,10))
-      var date = new Date(year, month, day);
-      return moment(date).format('dddd, MMMM D');
+      const year = Number(unformattedDay.substring(0, 4));
+      const month = Number(unformattedDay.substring(5, 7));
+      const day = Number(unformattedDay.substring(8, 10));
+      var date = new Date(year, month - 1, day);
+      return moment(date).format("dddd, MMMM D");
     },
-    selectDeliveryDate(deliveryDate){
-      this.deliveryDate = deliveryDate
+    selectDeliveryDate(deliveryDate) {
+      this.deliveryDate = deliveryDate;
     },
     getDeliveryDayClass(deliveryDate) {
-      if(this.deliveryDate === deliveryDate) {
-        return 'active'
+      if (this.deliveryDate === deliveryDate) {
+        return "active";
       }
-    }
+    },
   },
   async mounted() {
-    // load the order information
     await this.loadCart();
-    this.subTotal = parseFloat(this.getCart.sub_total).toFixed(2)
-    this.taxTotal = parseFloat(this.getCart.tax_total).toFixed(2)
-    this.shippingTotal = parseFloat(this.getCart.shipping_total).toFixed(2)
-    this.cartTotal = parseFloat(this.getCart.cart_total).toFixed(2)
-    this.orderItems = this.getCart.order_items
+    if(constants.ORDER_MINIMUM > this.getCart.sub_total){
+      this.$router.push('/order')
+    }
     // disable the cart while in checkout
     this.toggleShowCart();
     this.toggleDisableCart();
     // load the checkout information
     await this.loadCheckoutInformation();
     // format the delivery days array
-    this.deliveryDaysUnformatted = this.getDeliveryDays
-    this.getDeliveryDays.forEach(unformattedDay => {
-      this.deliveryDays.push(this.formatDay(unformattedDay))
+    this.deliveryDaysUnformatted = this.getDeliveryDays;
+    this.getDeliveryDays.forEach((unformattedDay) => {
+      this.deliveryDays.push(this.formatDay(unformattedDay));
     });
   },
 };

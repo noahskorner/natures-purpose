@@ -22,6 +22,8 @@ import TheHeader from "./components/layout/TheHeader";
 import TheCart from "@/components/layout/TheCart.vue";
 import TheAlert from "@/components/layout/TheAlert.vue";
 import { mapActions, mapGetters } from "vuex";
+import axios from 'axios';
+import API from '@/services/API.js'
 export default {
   components: {
     TheSidebar,
@@ -39,6 +41,7 @@ export default {
   },
   methods: {
     ...mapActions("cart", ["toggleShowCart"]),
+    ...mapActions("user", ["setIsAuthenticated"]),
     toggleSidebar() {
       this.showSidebar = !this.showSidebar;
     },
@@ -51,6 +54,34 @@ export default {
       }
     }
   },
+  async mounted() {
+    // Get token from cookies
+    if(!this.$cookies.get("auth")) { 
+      this.setIsAuthenticated(false)
+      return; 
+    }
+    const token = this.$cookies.get("auth").token;
+
+    // Headers
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    // If token, add to headers config
+    if (token) {
+      config.headers["Authorization"] = `Token ${token}`;
+    }
+
+    const { status, data } = await axios.post(`${API.baseURL}/store/is-authenticated/`, null, config);
+    if(status !== 200){
+      this.setIsAuthenticated(false)
+    }
+    else{
+      this.setIsAuthenticated(data.isAuthenticated)
+    }
+  }
 };
 </script>
 

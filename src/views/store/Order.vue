@@ -139,7 +139,6 @@
 }
 img {
   width: 100%;
-  border-radius: 8px;
 }
 
 .size-btn {

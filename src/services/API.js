@@ -1,8 +1,9 @@
 import axios from "axios";
 import Vue from "vue";
+import store from "../store/index.js";
 
 // connecting to local server
-// const baseURL = "http://localhost:8000"
+// const baseURL = "http://localhost:8000";
 // connecting to remote server
 const baseURL = "https://npdelivered-backend.herokuapp.com"
 
@@ -48,19 +49,19 @@ export default {
   placeOrder(orderDetails) {
     // Get auth from cookies
     const auth = Vue.$cookies.get("auth");
-    const isAuthenticated = Vue.$cookies.get("isAuthenticated");
+    const isAuthenticated = store.state.user.isAuthenticated;
     const device = Vue.$cookies.get("device");
 
     const payload = {
       auth,
       isAuthenticated,
       device,
-      orderDetails
-    }
+      orderDetails,
+    };
 
     return apiClient.post("/store/place-order/", payload);
   },
   getCheckoutInformation() {
-    return apiClient.get("/store/get-checkout-information/")
+    return apiClient.get("/store/get-checkout-information/");
   }
 };

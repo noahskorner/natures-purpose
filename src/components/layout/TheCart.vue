@@ -23,6 +23,16 @@
       <div class="hr"></div>
     </div>
     <div
+      v-if="getCart.sub_total < orderMinimum"
+      class="mx-auto my-0 py-0"
+      style="width: 90%"
+    >
+      <p class="text-danger">
+        <i class="fas fa-exclamation-circle"></i>
+        Your order does not meet the order minimum of ${{ orderMinimum }}.
+      </p>
+    </div>
+    <div
       class="cart-items w-100"
       :style="{ marginBottom: checkoutSectionHeight + 'px' }"
     >
@@ -40,64 +50,69 @@
       class="position-absolute checkout-section w-100 bg-cream border-top"
       ref="checkoutSection"
     >
-      <!-- Number of items -->
-      <div class="d-flex justify-content-between align-items-center">
-        <h6
-          class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+      <div v-if="getCart.sub_total > orderMinimum">
+        <!-- Number of items -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h6
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Items:
+          </h6>
+          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+            {{ getCart.cart_num_items }}
+          </h6>
+        </div>
+        <!-- Sub total -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h6
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Sub Total:
+          </h6>
+          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+            ${{ parseFloat(getCart.sub_total).toFixed(2) }}
+          </h6>
+        </div>
+        <!-- Shipping -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h6
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Delivery:
+          </h6>
+          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+            ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
+          </h6>
+        </div>
+        <!-- Shipping -->
+        <div class="d-flex justify-content-between align-items-center">
+          <h6
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Tax:
+          </h6>
+          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+            ${{ parseFloat(getCart.tax_total).toFixed(2) }}
+          </h6>
+        </div>
+        <!-- Total -->
+        <div
+          class="d-flex justify-content-between align-items-center border-top"
         >
-          Items:
-        </h6>
-        <h6 class="font-weight-normal font-secondary pt-2 pr-4">
-          {{ getCart.cart_num_items }}
-        </h6>
-      </div>
-      <!-- Sub total -->
-      <div class="d-flex justify-content-between align-items-center">
-        <h6
-          class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-        >
-          Sub Total:
-        </h6>
-        <h6 class="font-weight-normal font-secondary pt-2 pr-4">
-          ${{ parseFloat(getCart.sub_total).toFixed(2) }}
-        </h6>
-      </div>
-      <!-- Shipping -->
-      <div class="d-flex justify-content-between align-items-center">
-        <h6
-          class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-        >
-          Delivery:
-        </h6>
-        <h6 class="font-weight-normal font-secondary pt-2 pr-4">
-          ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
-        </h6>
-      </div>
-      <!-- Shipping -->
-      <div class="d-flex justify-content-between align-items-center">
-        <h6
-          class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-        >
-          Tax:
-        </h6>
-        <h6 class="font-weight-normal font-secondary pt-2 pr-4">
-          ${{ parseFloat(getCart.tax_total).toFixed(2) }}
-        </h6>
-      </div>
-      <!-- Total -->
-      <div class="d-flex justify-content-between align-items-center border-top">
-        <h3
-          class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-        >
-          Total:
-        </h3>
-        <h3 class="font-weight-normal font-secondary pt-2 pr-4">
-          ${{ parseFloat(getCart.cart_total).toFixed(2) }}
-        </h3>
+          <h3
+            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          >
+            Total:
+          </h3>
+          <h3 class="font-weight-normal font-secondary pt-2 pr-4">
+            ${{ parseFloat(getCart.cart_total).toFixed(2) }}
+          </h3>
+        </div>
       </div>
 
       <button
         class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary"
+        :disabled="getCart.sub_total < orderMinimum"
         @click="closeCartAndRoute('/checkout')"
       >
         Checkout
@@ -110,8 +125,14 @@
 import { mapActions, mapGetters } from "vuex";
 import { useWindowSize } from "vue-window-size";
 import CartItem from "../ui/CartItem";
+import constants from "@/constants/index.js";
 export default {
   emits: ["close-overlay"],
+  data() {
+    return {
+      orderMinimum: constants.ORDER_MINIMUM,
+    };
+  },
   setup() {
     const { width, height } = useWindowSize();
     return {
@@ -127,15 +148,17 @@ export default {
     ...mapGetters("cart", ["getCart"]),
   },
   methods: {
-    ...mapActions("cart", ["toggleShowCart", "loadCart"]),
+    ...mapActions("cart", ["toggleShowCart"]),
     ...mapActions("products", ["loadProducts"]),
     getCheckoutSectionHeight() {
-      this.checkoutSectionHeight = this.$refs.checkoutSection.clientHeight;
+      if (this.$route.path !== "/checkout") {
+        this.checkoutSectionHeight = this.$refs.checkoutSection.clientHeight;
+      }
     },
-    closeCartAndRoute(route){
+    closeCartAndRoute(route) {
       this.toggleShowCart();
-      this.$router.push(route)
-    }
+      this.$router.push(route);
+    },
   },
   async mounted() {
     await this.loadCart();

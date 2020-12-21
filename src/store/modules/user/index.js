@@ -32,6 +32,9 @@ export default {
       context.dispatch("cart/loadCart", {}, { root: true });
       router.push("/");
     },
+    async setIsAuthenticated(context, payload){
+      context.commit("setIsAuthenticated", payload)
+    }
   },
   getters: {
     isAuthenticated(state) {
@@ -56,5 +59,8 @@ export default {
       state.auth = "";
       Vue.$cookies.set("auth", "");
     },
+    setIsAuthenticated(state, payload) {
+      state.isAuthenticated = payload;
+    }
   },
 };
