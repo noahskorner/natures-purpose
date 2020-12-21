@@ -7,5 +7,8 @@ export default {
   },
   toggleDisableCart(state) {
     state.disableCart = !state.disableCart;
+  },
+  setShowCart(state, payload) {
+    state.showCart = payload;
   }
 };

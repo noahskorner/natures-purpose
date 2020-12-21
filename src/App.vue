@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="overlay" v-if="(getShowCart || showSidebar) && $route.path !== '/checkout'" @click="closeOverlay()"> </div>
+    <div class="overlay" v-if="(getShowCart || showSidebar)" @click="closeOverlay()"> </div>
     <transition name="slide-right">
       <the-sidebar
         v-if="showSidebar"
@@ -40,17 +40,17 @@ export default {
     ...mapGetters("cart", ["getShowCart"]),
   },
   methods: {
-    ...mapActions("cart", ["toggleShowCart"]),
+    ...mapActions("cart", ["setShowCart"]),
     ...mapActions("user", ["setIsAuthenticated"]),
     toggleSidebar() {
       this.showSidebar = !this.showSidebar;
     },
     closeOverlay() {
       if (this.showSidebar) {
-        this.toggleSidebar();
+        this.showSidebar = false;
       }
       else if(this.getShowCart){
-        this.toggleShowCart();
+        this.setShowCart(false);
       }
     }
   },

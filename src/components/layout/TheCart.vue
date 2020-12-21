@@ -11,7 +11,7 @@
       >
         <button
           class="btn pl-4 h-100 d-flex justify-content-center align-items-center"
-          @click="toggleShowCart()"
+          @click="setShowCart(false)"
         >
           <i class="fas fa-times fa-2x"></i>
         </button>
@@ -148,7 +148,7 @@ export default {
     ...mapGetters("cart", ["getCart"]),
   },
   methods: {
-    ...mapActions("cart", ["toggleShowCart"]),
+    ...mapActions("cart", ["setShowCart", "loadCart"]),
     ...mapActions("products", ["loadProducts"]),
     getCheckoutSectionHeight() {
       if (this.$route.path !== "/checkout") {
@@ -156,7 +156,7 @@ export default {
       }
     },
     closeCartAndRoute(route) {
-      this.toggleShowCart();
+      this.setShowCart(false);
       this.$router.push(route);
     },
   },

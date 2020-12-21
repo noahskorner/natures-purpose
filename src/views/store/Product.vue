@@ -5,14 +5,12 @@
       <div class="col-12">
         <div
           v-for="tag in selectedProduct.tags"
-          :key="tag.name"
-          class="position-relative d-inline-block mr-1"
+          :key="tag.id"
+          class="position-relative d-inline-block"
         >
-          <button
-            class="btn btn-outline-success btn-sm"
-          >
+          <div class="tag">
             {{ tag.name }}
-          </button>
+          </div>
         </div>
       </div>
       <div class="col-lg-5 col-sm-6 col-12">
@@ -118,7 +116,7 @@ export default {
     return {
       selectedProduct: null,
       quantity: 1,
-      size: null,
+      size: null
     };
   },
   computed: {
@@ -192,5 +190,16 @@ h6 {
 .size-btn-lg {
   width: 40px;
   height: 40px;
+}
+
+.tag {
+  background-color:#cff0cc;
+  padding: 2px 7px;
+  color: black;
+  border-radius: 10px;
+  font-size: .75rem;
+  margin: .15rem;
+  min-width: 25px;
+  text-align: center;
 }
 </style>

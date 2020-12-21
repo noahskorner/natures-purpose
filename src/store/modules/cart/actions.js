@@ -14,8 +14,6 @@ export default {
       device: Vue.$cookies.get('device')
     }
     let { status, data } = await API.getCart(payload);
-    console.log(payload)
-    console.log(data)
 
     if (status !== 200) {
       console.log("Network Error");
@@ -43,5 +41,8 @@ export default {
   },
   toggleDisableCart(context) {
     context.commit("toggleDisableCart");
+  },
+  async setShowCart(context, payload) {
+    context.commit("setShowCart", payload)
   }
 };

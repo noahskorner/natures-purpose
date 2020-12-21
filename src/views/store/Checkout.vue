@@ -280,7 +280,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions("cart", ["toggleShowCart", "toggleDisableCart", "loadCart"]),
+    ...mapActions("cart", ["setShowCart", "toggleDisableCart", "loadCart"]),
     ...mapActions("checkout", ["loadAffiliates", "loadCheckoutInformation"]),
     convertMonthYear() {
       return (
@@ -330,7 +330,7 @@ export default {
       this.$router.push('/order')
     }
     // disable the cart while in checkout
-    this.toggleShowCart();
+    this.setShowCart(false);
     this.toggleDisableCart();
     // load the checkout information
     await this.loadCheckoutInformation();

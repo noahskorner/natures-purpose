@@ -28,7 +28,7 @@
           class="link router-link font-secondary font-weight-normal"
           v-show="windowWidth > 768"
           @click="logout()"
-          >Account</div
+          >Logout</div
         >
 
 
@@ -41,7 +41,7 @@
             viewBox="0 0 16 16"
             class="bi bi-bag"
             v-if="$route.path !== '/checkout'"
-            @click="toggleShowCart()"
+            @click="setShowCart(true)"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -73,7 +73,7 @@ export default {
     ...mapGetters("user", ["isAuthenticated"]),
   },
   methods: {
-    ...mapActions("cart", ["toggleShowCart"]),
+    ...mapActions("cart", ["setShowCart"]),
     ...mapActions("user", ["logout"]),
     async logoutUser() {
       await this.logout().then().then(this.$router.push("/order"));
