@@ -194,7 +194,7 @@ h6 {
 
 .tag {
   background-color:#cff0cc;
-  padding: 2px 7px;
+  padding: 3px 7px;
   color: black;
   border-radius: 10px;
   font-size: .75rem;

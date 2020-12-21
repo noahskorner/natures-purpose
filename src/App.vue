@@ -165,6 +165,7 @@ button:focus {
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 50;
 }
 </style>
