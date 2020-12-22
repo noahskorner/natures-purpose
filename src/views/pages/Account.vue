@@ -3,36 +3,6 @@
     <div class="row w-100 p-0 m-0">
       <div class="col-lg-6 col-12 p-0 m-0">
         <base-card class="m-2">
-          <div class="w-100 text-center font-secondary">Account Settings</div>
-          <hr />
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex justify-content-center align-items-center">
-              <h6 class="font-secondary text-uppercase font-weight-normal">
-                Email:
-              </h6>
-              <h6 class="font-weight-normal mx-1">{{ email }}</h6>
-            </div>
-            <button class="btn btn-sm btn-outline-primary">Update email</button>
-          </div>
-          <div class="d-flex justify-content-between align-items-center my-1">
-            <div class="d-flex justify-content-center align-items-center">
-              <h6 class="font-secondary text-uppercase font-weight-normal">
-                Username:
-              </h6>
-              <h6 class="font-weight-normal mx-1">{{ username }}</h6>
-            </div>
-            <button class="btn btn-sm btn-outline-primary">
-              Change username
-            </button>
-          </div>
-          <hr />
-          <div class="d-flex justify-content-end">
-            <button class="btn btn-sm btn-danger">Change password</button>
-          </div>
-        </base-card>
-      </div>
-      <div class="col-lg-6 col-12 p-0 m-0">
-        <base-card class="m-2">
           <div class="w-100 text-center font-secondary">Past Orders</div>
           <hr />
           <table class="table table-sm table-striped">
@@ -67,10 +37,48 @@
           </div>
         </base-card>
       </div>
-      <div class="col-md-6 col-12 p-0 m-0">
+      <div class="col-lg-6 col-12 p-0 m-0">
+        <base-card class="m-2">
+          <div class="w-100 text-center font-secondary">Account Settings</div>
+          <hr />
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-center align-items-center">
+              <h6 class="font-secondary text-uppercase font-weight-normal">
+                Email:
+              </h6>
+              <h6 class="font-weight-normal mx-1">{{ email }}</h6>
+            </div>
+            <button class="btn btn-sm btn-outline-primary w-25">
+              Update email
+            </button>
+          </div>
+          <div class="d-flex justify-content-between align-items-center my-1">
+            <div class="d-flex justify-content-center align-items-center">
+              <h6 class="font-secondary text-uppercase font-weight-normal">
+                Username:
+              </h6>
+              <h6 class="font-weight-normal mx-1">{{ username }}</h6>
+            </div>
+            <button class="btn btn-sm btn-outline-primary w-25">
+              Change username
+            </button>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-sm btn-danger w-25">Change password</button>
+          </div>
+        </base-card>
         <base-card class="m-2">
           <div class="w-100 text-center font-secondary">Rewards</div>
           <hr />
+          <div class="d-flex justify-content-center align-items-center mb-3">
+            <i class="fas fa-gift fa-4x mr-4"></i>
+            <h4 class="font-secondary">1000 points</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="#">How do I earn rewards points?</a></li>
+            <li class="list-group-item"><a href="#">How do I spend my rewards points?</a></li>
+          </ul>
         </base-card>
       </div>
     </div>
@@ -130,7 +138,7 @@ export default {
 </script>
 
 <style scoped>
-tr{
+tr {
   text-align: center;
 }
 </style>

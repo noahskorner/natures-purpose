@@ -1,12 +1,16 @@
 <template>
   <div class="d-flex flex-column justify-content-start align-items-center">
     <div class="col-lg-10 col-12 max-width-720">
-      <div class="col-12 p-0" v-if="deliveryAddressError || deliveryDayError || deliveryInfoError">
+      <div
+        class="col-12 p-0"
+        v-if="deliveryAddressError || deliveryDayError || deliveryInfoError"
+      >
         <div
           class="alert alert-danger alert-dismissible fade show"
           role="alert"
         >
-          Please correct the errors below.
+          <i class="fas fa-exclamation-circle"></i> Please correct the errors
+          below.
         </div>
       </div>
       <base-card>
@@ -321,6 +325,7 @@ export default {
   methods: {
     ...mapActions("cart", ["setShowCart", "toggleDisableCart", "loadCart"]),
     ...mapActions("user", ["setIsAuthenticated"]),
+    ...mapActions("alert", ["addAlert"]),
     ...mapActions("checkout", ["loadAffiliates", "loadCheckoutInformation"]),
     convertMonthYear() {
       return (
@@ -330,7 +335,7 @@ export default {
         this.expirationDate.substring(0, 2)
       );
     },
-    createOrder() {
+    async createOrder() {
       this.deliveryAddressError = "";
       this.deliveryDayError = "";
       this.deliveryInfoError = "";
@@ -374,7 +379,12 @@ export default {
         expirationDate: this.convertMonthYear(this.expirationDate),
         cardCode: this.cardCode,
       };
-      API.placeOrder(payload);
+      const { status, data } = await API.placeOrder(payload);
+      console.log(status);
+      if (data.status === "Success") {
+        this.addAlert({ message: data.message, color: "alert-success" });
+        this.$router.push("/");
+      }
     },
     formatDay(unformattedDay) {
       // day is given in yyyy-mm-dd format

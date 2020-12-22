@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="">
     <section class="d-flex justify-content-between">
       <div class="d-flex justify-content-around align-items-center">
         <button class="btn link" @click="$emit('toggle-sidebar')">

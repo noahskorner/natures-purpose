@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="menu position-absolute"
-    :style="{ height: windowHeight + 'px' }"
-  >
+  <div class="menu position-absolute" :style="{ height: windowHeight + 'px' }">
     <div class="w-100">
       <div class="d-flex justify-content-end bg-cream header">
         <button
@@ -16,6 +13,12 @@
     </div>
     <div class="w-100">
       <div class="d-flex flex-column justify-content-start align-items-left">
+        <button
+          class="btn link router-link font-secondary font-weight-normal text-left"
+          @click="closeSidebarAndRoute('/')"
+        >
+          Home
+        </button>
         <button
           class="btn link router-link font-secondary font-weight-normal text-left"
           @click="closeSidebarAndRoute('/order')"
@@ -38,12 +41,23 @@
         </button>
       </div>
     </div>
+    <div class="w-100 fixed-bottom footer bg-cream border-top">
+      <div class="text-center font-secondary my-1">
+        <h4 class="font-weight-normal">Nature's Purpose</h4>
+        <hr class="mx-4 my-0">
+      </div>
+      <div class="d-flex justify-content-center">
+        <a href="" class="social-tag"> <i class="fab fa-facebook fa-2x"></i></a>
+        <a href="" class="social-tag"> <i class="fab fa-instagram fa-2x"></i></a>
+        <a href="" class="social-tag"> <i class="fab fa-yelp fa-2x"></i></a>
+      </div>
+    </div>
   </div>
 </template>
   
 <script>
 import { useWindowSize } from "vue-window-size";
-import { mapGetters } from "vuex"
+import { mapGetters } from "vuex";
 export default {
   setup() {
     const { width, height } = useWindowSize();
@@ -53,14 +67,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('user', ['isAuthenticated'])
+    ...mapGetters("user", ["isAuthenticated"]),
   },
   methods: {
-    closeSidebarAndRoute(route){
-      this.$emit('toggle-sidebar')
-      this.$router.push(route)
-    }
-  }
+    closeSidebarAndRoute(route) {
+      this.$emit("toggle-sidebar");
+      this.$router.push(route);
+    },
+  },
 };
 </script>
 
@@ -69,6 +83,15 @@ export default {
   background-color: white;
   width: 100vw;
   z-index: 100;
+}
+
+.social-tag {
+  color: var(--dark-grey) !important;
+  margin: 5px 15px;
+}
+
+.social-tag:hover {
+  color: var(--success) !important;
 }
 
 .header {
@@ -87,6 +110,10 @@ export default {
 
 @media (min-width: 768px) {
   .menu {
+    max-width: 480px;
+  }
+
+  .footer {
     max-width: 480px;
   }
 }
