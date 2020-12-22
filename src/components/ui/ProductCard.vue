@@ -12,7 +12,7 @@
           params: { name: convertToKebabCase(name), id: id },
         }"
       >
-        <img :src="imageURL" :alt="name + 'Image'" />
+        <img :src="imageURL" :alt="'Image of ' + name + ' product.'" />
         <h6 class="text-uppercase mt-1 mb-0 font-secondary font-weight-normal">
           {{ name }}
         </h6>
@@ -154,11 +154,6 @@ export default {
 </script>
 
 <style scoped>
-.product-card:hover {
-  color: var(--success);
-  padding: 0 !important;
-}
-
 .link:hover {
   cursor: pointer;
 }
@@ -173,5 +168,13 @@ img {
 
 .card {
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+}
+
+@media (min-width: 768px) {
+  .product-card:hover {
+    margin-bottom: 10px;
+    color: var(--success);
+    padding: 0 !important;
+  }
 }
 </style>

@@ -14,22 +14,20 @@
         >
           <i class="fas fa-times fa-2x"></i>
         </button>
-        <div class="font-secondary text-uppercase pr-4" style="font-size: 2rem">
+        <div class="font-secondary text-uppercase" style="font-size: 2rem">
           Cart
         </div>
-        <div></div>
+        <div style="width: 60px;"></div>
       </div>
       <div class="hr"></div>
     </div>
     <div
       v-if="getCart.sub_total < orderMinimum"
-      class="mx-auto my-0 py-0"
-      style="width: 90%"
+      class="mx-auto my-0 py-0 text-danger text-center border-bottom"
+      style="width: 95%"
     >
-      <p class="text-danger">
-        <i class="fas fa-exclamation-circle"></i>
-        Your order does not meet the order minimum of ${{ orderMinimum }}.
-      </p>
+      <i class="fas fa-exclamation-circle"></i>
+      Your order does not meet the order minimum of ${{ orderMinimum }}.
     </div>
     <div
       class="cart-items w-100"
@@ -43,54 +41,55 @@
         :quantity="item.quantity"
         :size="item.size"
       />
+      <div class="test"></div>
     </div>
 
     <div
-      class="position-absolute checkout-section w-100 bg-cream border-top"
+      class="position-fixed checkout-section w-100 bg-cream border-top"
       ref="checkoutSection"
     >
-      <div v-if="getCart.sub_total > orderMinimum">
+      <div>
         <!-- Number of items -->
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="mt-1 d-flex justify-content-between align-items-center">
           <h6
-            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
           >
             Items:
           </h6>
-          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+          <h6 class="font-weight-light font-secondary pt-2 pr-4">
             {{ getCart.cart_num_items }}
           </h6>
         </div>
         <!-- Sub total -->
         <div class="d-flex justify-content-between align-items-center">
           <h6
-            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
           >
             Sub Total:
           </h6>
-          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+          <h6 class="font-weight-light font-secondary pt-2 pr-4">
             ${{ parseFloat(getCart.sub_total).toFixed(2) }}
           </h6>
         </div>
         <!-- Shipping -->
         <div class="d-flex justify-content-between align-items-center">
           <h6
-            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
           >
             Delivery:
           </h6>
-          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+          <h6 class="font-weight-light font-secondary pt-2 pr-4">
             ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
           </h6>
         </div>
         <!-- Shipping -->
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center mb-1">
           <h6
-            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
           >
             Tax:
           </h6>
-          <h6 class="font-weight-normal font-secondary pt-2 pr-4">
+          <h6 class="font-weight-light font-secondary pt-2 pr-4">
             ${{ parseFloat(getCart.tax_total).toFixed(2) }}
           </h6>
         </div>
@@ -181,7 +180,25 @@ export default {
 }
 
 .cart-items {
-  overflow-y: scroll;
+  overflow-y: scroll !important;
+}
+
+.cart-items::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.cart-items::-webkit-scrollbar:vertical {
+  width: 11px;
+}
+
+.cart-items::-webkit-scrollbar:horizontal {
+  height: 11px;
+}
+
+.cart-items::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid white; /* should match background, can't be transparent */
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .checkout-section {
@@ -191,6 +208,10 @@ export default {
 
 @media (min-width: 768px) {
   .cart {
+    max-width: 480px;
+  }
+
+  .checkout-section {
     max-width: 480px;
   }
 }

@@ -78,6 +78,14 @@ export default {
     ...mapActions("cart", ["loadCart"]),
     async loginUser() {
       this.error = "";
+      if(!this.username){
+        this.error = "Please enter your username or email."
+        return;
+      }
+      if(!this.password){
+        this.error = "Please enter your password."
+        return;
+      }
       const payload = {
         username: this.username,
         password: this.password,

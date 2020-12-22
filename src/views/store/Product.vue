@@ -76,11 +76,11 @@
           <div class="my-2 d-flex justify-start">
             <div class="mr-5">
               <h6 class="font-weight-light">Weight:</h6>
-              <h4 class="my-2 font-weight-normal">{{ size.weight }}oz</h4>
+              <h4 class="my-2 font-weight-normal font-secondary">{{ size.weight }}oz</h4>
             </div>
             <div>
               <h6 class="font-weight-light">Unit Price:</h6>
-              <h4 class="my-2 font-weight-normal">${{ size.price.toFixed(2) }}</h4>
+              <h4 class="my-2 font-weight-normal font-secondary">${{ size.price.toFixed(2) }}</h4>
             </div>
           </div>
           <button
@@ -193,7 +193,7 @@ h6 {
   padding: 3px 7px;
   color: black;
   border-radius: 10px;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   margin: 0.15rem;
   min-width: 25px;
   text-align: center;

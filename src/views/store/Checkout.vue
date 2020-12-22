@@ -331,7 +331,6 @@ export default {
     }
     // disable the cart while in checkout
     this.setShowCart(false);
-    this.toggleDisableCart();
     // load the checkout information
     await this.loadCheckoutInformation();
     // format the delivery days array
