@@ -1,6 +1,14 @@
 <template>
   <div class="d-flex flex-column justify-content-start align-items-center">
     <div class="col-lg-10 col-12 max-width-720">
+      <div class="col-12 p-0" v-if="deliveryAddressError || deliveryDayError || deliveryInfoError">
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          Please correct the errors below.
+        </div>
+      </div>
       <base-card>
         <!-- Delivery Address Form -->
         <div class="w-full">
@@ -8,6 +16,15 @@
             Delivery address
           </h4>
           <hr />
+          <!-- Errors -->
+          <div class="col-12 p-0" v-if="deliveryAddressError">
+            <div
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              {{ deliveryAddressError }}
+            </div>
+          </div>
           <div
             class="d-flex flex-column justify-content-center align-items-center"
           >
@@ -76,6 +93,15 @@
             Delivery day
           </h4>
           <hr />
+          <!-- Errors -->
+          <div class="col-12 p-0" v-if="deliveryDayError">
+            <div
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              {{ deliveryDayError }}
+            </div>
+          </div>
           <div class="row">
             <div class="text-left mx-2">
               <button
@@ -96,6 +122,15 @@
             Delivery info
           </h4>
           <hr />
+          <!-- Errors -->
+          <div class="col-12 p-0" v-if="deliveryInfoError">
+            <div
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              {{ deliveryInfoError }}
+            </div>
+          </div>
           <div
             class="d-flex flex-column justify-content-center align-items-center"
           >
@@ -193,7 +228,7 @@
         <!-- Payment -->
         <div class="w-full">
           <h4 class="font-secondary text-uppercase font-weight-normal">
-            Pay ${{ parseFloat(cartTotal).toFixed(2) }}
+            Pay ${{ parseFloat(getCart.cart_total).toFixed(2) }}
           </h4>
           <hr />
           <div class="row mx-1">
@@ -250,11 +285,15 @@
 import { mapActions, mapGetters } from "vuex";
 import moment from "moment";
 import API from "../../services/API";
-import constants from '@/constants/index.js'
+import constants from "@/constants/index.js";
+import axios from "axios";
 export default {
   data() {
     return {
       deliveryDays: [],
+      deliveryAddressError: "",
+      deliveryDayError: "",
+      deliveryInfoError: "",
       deliveryDaysUnformatted: [],
       affiliate: -1,
       deliveryDate: "",
@@ -281,6 +320,7 @@ export default {
   },
   methods: {
     ...mapActions("cart", ["setShowCart", "toggleDisableCart", "loadCart"]),
+    ...mapActions("user", ["setIsAuthenticated"]),
     ...mapActions("checkout", ["loadAffiliates", "loadCheckoutInformation"]),
     convertMonthYear() {
       return (
@@ -291,6 +331,35 @@ export default {
       );
     },
     createOrder() {
+      this.deliveryAddressError = "";
+      this.deliveryDayError = "";
+      this.deliveryInfoError = "";
+      this.deliveryInfoError;
+      if (!this.address) {
+        this.deliveryAddressError = "Please enter a valid address.";
+        document.body.scrollTop = 0;
+        return;
+      }
+      if (!this.city) {
+        this.deliveryAddressError = "Please select a city.";
+        document.body.scrollTop = 0;
+        return;
+      }
+      if (!this.zip) {
+        this.deliveryAddressError = "Please enter a valid zipcode.";
+        document.body.scrollTop = 0;
+        return;
+      }
+      if (!this.deliveryDate) {
+        this.deliveryDayError = "Please select a delivery date.";
+        document.body.scrollTop = 0;
+        return;
+      }
+      if (!this.name || !this.phone || !this.email) {
+        this.deliveryInfoError = "Please fill out all fields.";
+        document.body.scrollTop = 0;
+        return;
+      }
       const payload = {
         affiliate: this.affiliate,
         deliveryDate: this.deliveryDate,
@@ -325,9 +394,36 @@ export default {
     },
   },
   async mounted() {
+    // Get token from cookies
+    if (this.$cookies.get("auth")) {
+      const token = this.$cookies.get("auth").token;
+
+      // Headers
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      // If token, add to headers config
+      if (token) {
+        config.headers["Authorization"] = `Token ${token}`;
+      }
+
+      const { status, data } = await axios.post(
+        `${API.baseURL}/store/is-authenticated/`,
+        null,
+        config
+      );
+      if (status !== 200) {
+        this.setIsAuthenticated(false);
+      } else {
+        this.setIsAuthenticated(data.isAuthenticated);
+      }
+    }
     await this.loadCart();
-    if(constants.ORDER_MINIMUM > this.getCart.sub_total){
-      this.$router.push('/order')
+    if (constants.ORDER_MINIMUM > this.getCart.sub_total) {
+      this.$router.push("/order");
     }
     // disable the cart while in checkout
     this.setShowCart(false);
