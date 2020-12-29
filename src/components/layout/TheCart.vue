@@ -102,7 +102,7 @@
           >
             Total:
           </h3>
-          <h3 class="font-weight-normal font-secondary pt-2 pr-4">
+          <h3 class="font-weight-normal font-secondary pr-4">
             ${{ parseFloat(getCart.cart_total).toFixed(2) }}
           </h3>
         </div>
@@ -176,7 +176,7 @@ export default {
 }
 
 .header {
-  height: 5rem;
+  height: 4rem;
 }
 
 .cart-items {

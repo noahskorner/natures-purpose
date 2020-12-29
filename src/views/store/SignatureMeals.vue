@@ -53,8 +53,7 @@
                     @click="toggleFilter(tag)"
                     :class="getTagClass(tag)"
                     :key="tag"
-                  >
-                    {{ tag }}
+                  >{{ tag }}
                   </p>
                 </div>
               </div>

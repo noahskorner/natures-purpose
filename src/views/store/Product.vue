@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-5 col-sm-6 col-12">
+      <div class="col-lg-5 col-sm-6 col-12 m-0">
         <img :src="selectedProduct.imageURL" alt="" />
         <!-- Macros -->
         <base-card>

@@ -42,12 +42,8 @@
       </div>
     </div>
     <div class="w-100 fixed-bottom footer bg-cream border-top">
-      <div class="text-center font-secondary my-1">
-        <h4 class="font-weight-normal">Nature's Purpose</h4>
-        <hr class="mx-4 my-0">
-      </div>
       <div class="d-flex justify-content-center">
-        <a href="" class="social-tag"> <i class="fab fa-facebook fa-2x"></i></a>
+        <a href="" class="social-tag" > <i class="fab fa-facebook fa-2x"></i></a>
         <a href="" class="social-tag"> <i class="fab fa-instagram fa-2x"></i></a>
         <a href="" class="social-tag"> <i class="fab fa-yelp fa-2x"></i></a>
       </div>
@@ -95,7 +91,7 @@ export default {
 }
 
 .header {
-  height: 5rem;
+  height: 4rem;
 }
 
 .link {

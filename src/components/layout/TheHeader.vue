@@ -2,7 +2,7 @@
   <nav class="">
     <section class="d-flex justify-content-between">
       <div class="d-flex justify-content-around align-items-center">
-        <button class="btn link" @click="$emit('toggle-sidebar')">
+        <button class="btn link p-0" @click="$emit('toggle-sidebar')">
           <i class="fas fa-bars"></i>
         </button>
       </div>
@@ -90,7 +90,7 @@ nav {
 }
 
 nav section {
-  height: 5rem;
+  height: 4rem;
   z-index: 10;
 }
 

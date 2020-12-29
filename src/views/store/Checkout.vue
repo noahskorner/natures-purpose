@@ -420,15 +420,19 @@ export default {
         config.headers["Authorization"] = `Token ${token}`;
       }
 
-      const { status, data } = await axios.post(
-        `${API.baseURL}/store/is-authenticated/`,
-        null,
-        config
-      );
-      if (status !== 200) {
+      try {
+        const { status, data } = await axios.post(
+          `${API.baseURL}/store/is-authenticated/`,
+          null,
+          config
+        );
+        if (status !== 200) {
+          this.setIsAuthenticated(false);
+        } else {
+          this.setIsAuthenticated(data.isAuthenticated);
+        }
+      } catch (error) {
         this.setIsAuthenticated(false);
-      } else {
-        this.setIsAuthenticated(data.isAuthenticated);
       }
     }
     await this.loadCart();

@@ -5,7 +5,7 @@
       <h6>$ {{ size.price }}</h6>
     </div>
     <div class="">
-      <p class="font-italic">with {{ getRecipeStr()(id)}}</p>
+      <p class="font-italic m-0">with {{ getRecipeStr()(id)}}</p>
     </div>
     <div class="d-flex justify-content-between align-items-center">
       <h6 class="mb-0">{{ size.name }}</h6>
