@@ -59,7 +59,6 @@ export default {
     login(state, payload) {
       Vue.$cookies.set("auth", payload);
       state.isAuthenticated = true;
-      console.log(payload);
       state.isStaff = payload.isStaff;
       state.auth = payload;
       router.push("/order");

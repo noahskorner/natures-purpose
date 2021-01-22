@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex flex-column justify-content-start align-items-center">
+  <div
+    class="d-flex flex-column justify-content-start align-items-center"
+    v-if="!loading"
+  >
     <div class="col-lg-10 col-12 max-width-720">
       <base-card>
         <!-- Delivery Address Form -->
@@ -271,6 +274,11 @@
       </base-card>
     </div>
   </div>
+  <div class="d-flex justify-content-center mt-5" v-else>
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -300,6 +308,7 @@ export default {
       expirationDate: "",
       cardNumber: "",
       cardCode: "",
+      loading: true,
     };
   },
   computed: {
@@ -436,6 +445,7 @@ export default {
     this.getDeliveryDays.forEach((unformattedDay) => {
       this.deliveryDays.push(this.formatDay(unformattedDay));
     });
+    this.loading = false;
   },
 };
 </script>

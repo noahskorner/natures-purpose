@@ -1,120 +1,127 @@
 <template>
-  <div
-    v-if="$route.path !== '/checkout'"
-    class="cart d-flex flex-column justify-content-start position-absolute"
-    :style="{ height: windowHeight + 'px' }"
-  >
-    <div class="w-100">
-      <div
-        class="d-flex justify-content-between align-items-center bg-cream header"
-      >
-        <button
-          class="btn pl-4 h-100 d-flex justify-content-center align-items-center"
-          @click="setShowCart(false)"
-        >
-          <i class="fas fa-times fa-2x"></i>
-        </button>
-        <div class="font-secondary text-uppercase" style="font-size: 2rem">
-          Cart
-        </div>
-        <div style="width: 60px;"></div>
-      </div>
-      <div class="hr"></div>
-    </div>
+  <div v-if="$route.path !== '/checkout'">
     <div
-      v-if="getCart.sub_total < orderMinimum"
-      class="mx-auto my-0 py-0 text-danger text-center border-bottom"
-      style="width: 95%"
+      v-if="!loading"
+      class="cart d-flex flex-column justify-content-start position-absolute"
+      :style="{ height: windowHeight + 'px' }"
     >
-      <i class="fas fa-exclamation-circle"></i>
-      Your order does not meet the order minimum of ${{ orderMinimum }}.
-    </div>
-    <div
-      class="cart-items w-100"
-      :style="{ marginBottom: checkoutSectionHeight + 'px' }"
-    >
-      <cart-item
-        v-for="item in getCart.order_items"
-        :key="item.id"
-        :id="item.product.id"
-        :name="item.product.name"
-        :quantity="item.quantity"
-        :size="item.size"
-      />
-      <div class="test"></div>
-    </div>
-
-    <div
-      class="position-fixed checkout-section w-100 bg-cream border-top"
-      ref="checkoutSection"
-    >
-      <div>
-        <!-- Number of items -->
-        <div class="mt-1 d-flex justify-content-between align-items-center">
-          <h6
-            class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-          >
-            Items:
-          </h6>
-          <h6 class="font-weight-light font-secondary pt-2 pr-4">
-            {{ getCart.cart_num_items }}
-          </h6>
-        </div>
-        <!-- Sub total -->
-        <div class="d-flex justify-content-between align-items-center">
-          <h6
-            class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-          >
-            Sub Total:
-          </h6>
-          <h6 class="font-weight-light font-secondary pt-2 pr-4">
-            ${{ parseFloat(getCart.sub_total).toFixed(2) }}
-          </h6>
-        </div>
-        <!-- Shipping -->
-        <div class="d-flex justify-content-between align-items-center">
-          <h6
-            class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-          >
-            Delivery:
-          </h6>
-          <h6 class="font-weight-light font-secondary pt-2 pr-4">
-            ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
-          </h6>
-        </div>
-        <!-- Shipping -->
-        <div class="d-flex justify-content-between align-items-center mb-1">
-          <h6
-            class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
-          >
-            Tax:
-          </h6>
-          <h6 class="font-weight-light font-secondary pt-2 pr-4">
-            ${{ parseFloat(getCart.tax_total).toFixed(2) }}
-          </h6>
-        </div>
-        <!-- Total -->
+      <div class="w-100">
         <div
-          class="d-flex justify-content-between align-items-center border-top"
+          class="d-flex justify-content-between align-items-center bg-cream header"
         >
-          <h3
-            class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+          <button
+            class="btn pl-4 h-100 d-flex justify-content-center align-items-center"
+            @click="setShowCart(false)"
           >
-            Total:
-          </h3>
-          <h3 class="font-weight-normal font-secondary pr-4">
-            ${{ parseFloat(getCart.cart_total).toFixed(2) }}
-          </h3>
+            <i class="fas fa-times fa-2x"></i>
+          </button>
+          <div class="font-secondary text-uppercase" style="font-size: 2rem">
+            Cart
+          </div>
+          <div style="width: 60px"></div>
         </div>
+        <div class="hr"></div>
+      </div>
+      <div
+        v-if="getCart.sub_total < orderMinimum"
+        class="mx-auto my-0 py-0 text-danger text-center border-bottom"
+        style="width: 95%"
+      >
+        <i class="fas fa-exclamation-circle"></i>
+        Your order does not meet the order minimum of ${{ orderMinimum }}.
+      </div>
+      <div
+        class="cart-items w-100"
+        :style="{ marginBottom: checkoutSectionHeight + 'px' }"
+      >
+        <cart-item
+          v-for="item in getCart.order_items"
+          :key="item.id"
+          :id="item.product.id"
+          :name="item.product.name"
+          :quantity="item.quantity"
+          :size="item.size"
+        />
+        <div class="test"></div>
       </div>
 
-      <button
-        class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary"
-        :disabled="getCart.sub_total < orderMinimum"
-        @click="closeCartAndRoute('/checkout')"
+      <div
+        class="position-fixed checkout-section w-100 bg-cream border-top"
+        ref="checkoutSection"
       >
-        Checkout
-      </button>
+        <div>
+          <!-- Number of items -->
+          <div class="mt-1 d-flex justify-content-between align-items-center">
+            <h6
+              class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Items:
+            </h6>
+            <h6 class="font-weight-light font-secondary pt-2 pr-4">
+              {{ getCart.cart_num_items }}
+            </h6>
+          </div>
+          <!-- Sub total -->
+          <div class="d-flex justify-content-between align-items-center">
+            <h6
+              class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Sub Total:
+            </h6>
+            <h6 class="font-weight-light font-secondary pt-2 pr-4">
+              ${{ parseFloat(getCart.sub_total).toFixed(2) }}
+            </h6>
+          </div>
+          <!-- Shipping -->
+          <div class="d-flex justify-content-between align-items-center">
+            <h6
+              class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Delivery:
+            </h6>
+            <h6 class="font-weight-light font-secondary pt-2 pr-4">
+              ${{ parseFloat(getCart.shipping_total).toFixed(2) }}
+            </h6>
+          </div>
+          <!-- Shipping -->
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <h6
+              class="m-0 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Tax:
+            </h6>
+            <h6 class="font-weight-light font-secondary pt-2 pr-4">
+              ${{ parseFloat(getCart.tax_total).toFixed(2) }}
+            </h6>
+          </div>
+          <!-- Total -->
+          <div
+            class="d-flex justify-content-between align-items-center border-top"
+          >
+            <h3
+              class="m-2 ml-4 font-secondary text-uppercase font-weight-normal align-middle"
+            >
+              Total:
+            </h3>
+            <h3 class="font-weight-normal font-secondary pr-4">
+              ${{ parseFloat(getCart.cart_total).toFixed(2) }}
+            </h3>
+          </div>
+        </div>
+
+        <button
+          class="rounded-0 btn btn-success btn-block text-uppercase btn-lg font-secondary"
+          :disabled="getCart.sub_total < orderMinimum"
+          @click="closeCartAndRoute('/checkout')"
+        >
+          Checkout
+        </button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-5" v-else>
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
   </div>
 </template>

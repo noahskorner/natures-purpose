@@ -1,8 +1,8 @@
 <template>
   <div class="alert-wrapper">
       <div
-        v-for="(alert, index) in getAlerts"
-        :key="index"
+        v-for="alert in getAlerts"
+        :key="alert"
         class="alert alert-dismissible fade show mx-auto w-100"
         role="alert"
         :class="alert.color"

@@ -1,88 +1,92 @@
 <template>
-    <!-- Product Grid -->
-    <product-grid>
-      <template #header>
-        <h1 class="text-uppercase font-secondary font-weight-normal mt-4">
-          Signature Meals
-        </h1>
-        <hr />
-      </template>
-      <template #filters>
-        <div
-          class="w-100 d-flex justify-content-between align-items-center mb-2 px-1"
-        >
-          <div class="d-flex justify-content-start align-items-center">
-            <div
-              v-if="windowWidth > 768"
-              class="d-flex flex-col align-items-center"
-            >
-              <h6
-                class="font-secondary text-uppercase h-100 font-weight-normal"
+  <!-- Product Grid -->
+  <product-grid v-if="!loading">
+    <template #header>
+      <h1 class="text-uppercase font-secondary font-weight-normal mt-4">
+        Signature Meals
+      </h1>
+      <hr />
+    </template>
+    <template #filters>
+      <div
+        class="w-100 d-flex justify-content-between align-items-center mb-2 px-1"
+      >
+        <div class="d-flex justify-content-start align-items-center">
+          <div
+            v-if="windowWidth > 768"
+            class="d-flex flex-col align-items-center"
+          >
+            <h6 class="font-secondary text-uppercase h-100 font-weight-normal">
+              Filters:
+            </h6>
+            <div class="text-left">
+              <button
+                class="btn btn-sm btn-outline-success m-1"
+                v-for="tag in tags"
+                @click="toggleFilter(tag)"
+                :class="getTagClass(tag)"
+                :key="tag"
+              >
+                {{ tag }}
+              </button>
+            </div>
+          </div>
+          <div v-else class="px-1 text-left">
+            <div class="dropdown">
+              <button
+                class="btn btn-sm btn-outline-dark font-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
                 Filters:
-              </h6>
-              <div class="text-left">
-                <button
-                  class="btn btn-sm btn-outline-success m-1"
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <p
+                  class="dropdown-item mb-0"
                   v-for="tag in tags"
                   @click="toggleFilter(tag)"
                   :class="getTagClass(tag)"
                   :key="tag"
                 >
                   {{ tag }}
-                </button>
-              </div>
-            </div>
-            <div v-else class="px-1 text-left">
-              <div class="dropdown">
-                <button
-                  class="btn btn-sm btn-outline-dark font-secondary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Filters:
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <p
-                    class="dropdown-item mb-0"
-                    v-for="tag in tags"
-                    @click="toggleFilter(tag)"
-                    :class="getTagClass(tag)"
-                    :key="tag"
-                  >{{ tag }}
-                  </p>
-                </div>
+                </p>
               </div>
             </div>
           </div>
-
-          <button
-            class="btn btn-sm btn-outline-danger ml-5 text-nowrap"
-            @click="removeFilters()"
-          >
-            Remove filters ({{ filters.length }})
-          </button>
         </div>
-        <hr />
-      </template>
-      <template #products>
-        <product-card
-          v-for="(product, index) in getFilteredProducts"
-          link="signature-meals"
-          :key="product.id"
-          :id="product.id"
-          :tags="product.tags"
-          :name="product.name"
-          :recipes="product.recipes"
-          :imageURL="product.imageURL"
-          :sizes="product.sizes"
-          :class="{ 'border-top': index === 0 && windowWidth <= 575 }"
-        />
-      </template>
-    </product-grid>
+
+        <button
+          class="btn btn-sm btn-outline-danger ml-5 text-nowrap"
+          @click="removeFilters()"
+        >
+          Remove filters ({{ filters.length }})
+        </button>
+      </div>
+      <hr />
+    </template>
+    <template #products>
+      <product-card
+        v-for="(product, index) in getFilteredProducts"
+        link="signature-meals"
+        :key="product.id"
+        :id="product.id"
+        :tags="product.tags"
+        :name="product.name"
+        :recipes="product.recipes"
+        :imageURL="product.imageURL"
+        :sizes="product.sizes"
+        :class="{ 'border-top': index === 0 && windowWidth <= 575 }"
+      />
+    </template>
+  </product-grid>
+  <div class="d-flex justify-content-center mt-5" v-else>
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -94,7 +98,8 @@ export default {
     return {
       products: [],
       filters: [],
-      tags: []
+      tags: [],
+      loading: true,
     };
   },
   setup() {
@@ -157,6 +162,7 @@ export default {
     await this.loadProducts();
     this.products = this.getSignatureMeals;
     this.tags = this.getSignatureMealsTags;
+    this.loading = false;
   },
 };
 </script>

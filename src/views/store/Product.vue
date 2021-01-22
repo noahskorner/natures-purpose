@@ -46,7 +46,9 @@
           <h4 class="font-secondary font-weight-normal">
             {{ selectedProduct.name }}
           </h4>
-          <p class="font-italic m-0 font-weight-light">with {{ getRecipeStr(selectedProduct.id) }}</p>
+          <p class="font-italic m-0 font-weight-light">
+            with {{ getRecipeStr(selectedProduct.id) }}
+          </p>
           <hr class="mb-0 mt-1" />
           <div class="my-2">
             <h6 class="font-weight-normal font-secondary">Size:</h6>
@@ -65,7 +67,9 @@
               <button class="btn btn-sm btn-dark" @click="quantityDown()">
                 <i class="fas fa-minus"></i>
               </button>
-              <div class="size-btn-lg text-center d-flex justify-content-center align-items-center">
+              <div
+                class="size-btn-lg text-center d-flex justify-content-center align-items-center"
+              >
                 <div>{{ quantity }}</div>
               </div>
               <button class="btn btn-sm btn-success" @click="quantityUp()">
@@ -76,11 +80,15 @@
           <div class="my-2 d-flex justify-start">
             <div class="mr-5">
               <h6 class="font-weight-light">Weight:</h6>
-              <h4 class="my-2 font-weight-normal font-secondary">{{ size.weight }}oz</h4>
+              <h4 class="my-2 font-weight-normal font-secondary">
+                {{ size.weight }}oz
+              </h4>
             </div>
             <div>
               <h6 class="font-weight-light">Unit Price:</h6>
-              <h4 class="my-2 font-weight-normal font-secondary">${{ size.price.toFixed(2) }}</h4>
+              <h4 class="my-2 font-weight-normal font-secondary">
+                ${{ size.price.toFixed(2) }}
+              </h4>
             </div>
           </div>
           <button
@@ -93,13 +101,19 @@
         <!-- Ingredients -->
         <base-card>
           <h4 class="font-secondary font-weight-normal">Ingredients</h4>
-          <hr class="my-2"> 
-          <p class="font-italic font-weight-light">{{ getIngredientStr(selectedProduct.id) }}</p>
+          <hr class="my-2" />
+          <p class="font-italic font-weight-light">
+            {{ getIngredientStr(selectedProduct.id) }}
+          </p>
         </base-card>
       </div>
     </div>
     <!-- Loading -->
-    <div v-else>Loading...</div>
+    <div class="d-flex justify-content-center mt-5" v-else>
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
   </section>
 </template>
 

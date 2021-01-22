@@ -2,10 +2,10 @@
   <div class="container">
     <base-card class="max-width-720">
       <h1 class="text-uppercase font-secondary font-weight-normal text-center">
-        login
+        Login
       </h1>
       <div class="row">
-        <div class="col-12" v-if="error">
+        <div lass="col-12" v-if="error">
           <div
             class="alert alert-danger alert-dismissible fade show"
             role="alert"
@@ -108,11 +108,6 @@ export default {
         return;
       }
     },
-  },
-  mounted() {
-    if(this.isAuthenticated){
-      this.$router.push('/account')
-    }
   }
 };
 </script>
