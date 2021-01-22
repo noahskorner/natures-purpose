@@ -1,10 +1,9 @@
 <template>
-  <div class="w-100 alert-wrapper mt-2">
-    <div class="mx-2">
+  <div class="alert-wrapper">
       <div
         v-for="(alert, index) in getAlerts"
         :key="index"
-        class="alert alert-dismissible fade show max-width-960 mx-auto"
+        class="alert alert-dismissible fade show mx-auto w-100"
         role="alert"
         :class="alert.color"
       >
@@ -14,26 +13,35 @@
           class="close"
           data-dismiss="alert"
           aria-label="Close"
-          @click="removeAlert(index)"
         >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters("alert", ["getAlerts"]),
-  },
-  methods: {
-    ...mapActions("alert", ["removeAlert"]),
   },
 };
 </script>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.alert-wrapper {
+  position: absolute;
+  right: 5px;
+  width:  480px;
+  bottom: 0;
+}
 </style>

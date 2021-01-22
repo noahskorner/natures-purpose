@@ -1,18 +1,6 @@
 <template>
   <div class="d-flex flex-column justify-content-start align-items-center">
     <div class="col-lg-10 col-12 max-width-720">
-      <div
-        class="col-12 p-0"
-        v-if="deliveryAddressError || deliveryDayError || deliveryInfoError"
-      >
-        <div
-          class="alert alert-danger alert-dismissible fade show"
-          role="alert"
-        >
-          <i class="fas fa-exclamation-circle"></i> Please correct the errors
-          below.
-        </div>
-      </div>
       <base-card>
         <!-- Delivery Address Form -->
         <div class="w-full">

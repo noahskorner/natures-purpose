@@ -76,7 +76,7 @@ export default {
     ...mapActions("cart", ["setShowCart"]),
     ...mapActions("user", ["logout"]),
     async logoutUser() {
-      await this.logout().then().then(this.$router.push("/order"));
+      await this.logout()
     },
   },
 };

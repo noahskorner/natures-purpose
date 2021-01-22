@@ -8,6 +8,9 @@ export default {
   actions: {
     addAlert(context, payload) {
       context.commit("addAlert", payload);
+      setTimeout(function () {
+        context.commit("removeAlert")
+      }, 5000);
     },
     removeAlert(context, payload) {
       context.commit("removeAlert", payload)
@@ -22,8 +25,8 @@ export default {
     addAlert(state, payload) {
       state.alerts.push(payload);
     },
-    removeAlert(state, index) {
-      state.alerts.splice(index, 1)
+    removeAlert(state) {
+      state.alerts.shift()
     }
   },
 };

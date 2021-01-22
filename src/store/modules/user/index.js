@@ -31,6 +31,7 @@ export default {
       // Commit the mutation
       context.commit("logout");
       context.dispatch("cart/loadCart", {}, { root: true });
+      context.dispatch("alert/addAlert", {message: "Successfully logged out! See you next time.", color: "alert-success"}, { root: true })
       router.push("/");
     },
     async setIsAuthenticated(context, payload){

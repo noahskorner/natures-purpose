@@ -24,6 +24,7 @@
                 <td class="text-right">
                   <button
                     class="btn btn-sm btn-success text-uppercase font-secondary"
+                    @click="reorder(order.id)"
                   >
                     <i class="fas fa-redo"></i>&nbsp;&nbsp;Reorder
                   </button>
@@ -76,8 +77,12 @@
             <h4 class="font-secondary">1000 points</h4>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"><a href="#">How do I earn rewards points?</a></li>
-            <li class="list-group-item"><a href="#">How do I spend my rewards points?</a></li>
+            <li class="list-group-item">
+              <a href="#">How do I earn rewards points?</a>
+            </li>
+            <li class="list-group-item">
+              <a href="#">How do I spend my rewards points?</a>
+            </li>
           </ul>
         </base-card>
       </div>
@@ -86,8 +91,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import Vue from 'vue';
 import API from "@/services/API.js";
 export default {
   data() {
@@ -98,7 +104,37 @@ export default {
     };
   },
   computed: {
-    ...mapGetters[("user", ["isAuthenticated"])],
+    ...mapGetters("user", ["isAuthenticated"]),
+  },
+  methods: {
+    ...mapActions("cart", ["setShowCart"]),
+    async reorder(orderId){
+      // Get token from state
+    const token = Vue.$cookies.get("auth").token;
+
+    // Headers
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    // If token, add to headers config
+    if (token) {
+      config.headers["Authorization"] = `Token ${token}`;
+    }
+
+    const payload = { 'orderId' : orderId }
+
+    const { status } = await axios.post(`${API.baseURL}/store/reorder/`, payload, config);
+
+    if ( status === 200 ){
+      this.setShowCart(true)
+    }
+    else{
+      console.log("Something went wrong when trying to reorder...")
+    }
+    }
   },
   async mounted() {
     if (!this.$cookies.get("auth")) {

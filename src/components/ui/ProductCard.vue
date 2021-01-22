@@ -125,6 +125,7 @@ export default {
     },
     ...mapGetters("products", ["getRecipeStr"]),
     ...mapActions("cart", ["updateCart", "toggleShowCart"]),
+    ...mapActions("alert", ["addAlert"]),
     recipeStr() {
       const recipeStr = this.getRecipeStr(this.id);
       return recipeStr(this.id);
@@ -172,9 +173,10 @@ img {
 
 @media (min-width: 768px) {
   .product-card:hover {
-    margin-bottom: 10px;
     color: var(--success);
-    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
   }
 }
 </style>

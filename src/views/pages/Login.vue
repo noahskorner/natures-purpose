@@ -76,6 +76,7 @@ export default {
   methods: {
     ...mapActions("user", ["login"]),
     ...mapActions("cart", ["loadCart"]),
+    ...mapActions("alert", ["addAlert"]),
     async loginUser() {
       this.error = "";
       if(!this.username){
@@ -100,6 +101,7 @@ export default {
         }
         // Commit the mutation (logged in successfully)
         this.login(data);
+        this.addAlert({message: "Login successful!", color: "alert-success"})
         return;
       } catch {
         this.error = "Invalid username or password.";
