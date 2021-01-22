@@ -41,7 +41,9 @@ export default {
 .alert-wrapper {
   position: absolute;
   right: 5px;
-  width:  480px;
+  max-width:  480px;
+  width: 100%;
   bottom: 0;
+  z-index: 9999;
 }
 </style>
