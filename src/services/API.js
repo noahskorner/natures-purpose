@@ -63,5 +63,23 @@ export default {
   },
   getCheckoutInformation() {
     return apiClient.get("/store/get-checkout-information/");
-  }
+  },
+  getAdminReports() {
+    // Get token from state
+    const token = Vue.$cookies.get("auth").token;
+
+    // Headers
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    // If token, add to headers config
+    if (token) {
+      config.headers["Authorization"] = `Token ${token}`;
+    }
+
+    return axios.post(`${baseURL}/store/get-admin-reports/`, null, config);
+  },
 };

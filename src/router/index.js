@@ -14,6 +14,7 @@ import Soups from "../views/store/Soups.vue";
 import Sauces from "../views/store/Sauces.vue";
 import Product from "../views/store/Product.vue";
 import Checkout from "../views/store/Checkout.vue";
+import Reports from "../views/admin/Reports.vue";
 import NotFound from "../views/NotFound.vue";
 
 Vue.use(VueRouter);
@@ -96,6 +97,11 @@ const routes = [
     path: "/soups/:name/:id",
     props: true,
     component: Product
+  },
+  {
+    path: "/admin",
+    props: true,
+    component: Reports
   },
   {
     path: "/:notFound(.*)",

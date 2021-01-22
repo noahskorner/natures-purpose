@@ -39,6 +39,13 @@
         >
           Account
         </button>
+        <button
+          v-if="isStaff"
+          class="btn link router-link font-secondary font-weight-normal text-left"
+          @click="closeSidebarAndRoute('/admin')"
+        >
+          Admin
+        </button>
       </div>
     </div>
     <div class="w-100 fixed-bottom footer bg-cream border-top">
@@ -63,7 +70,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["isAuthenticated"]),
+    ...mapGetters("user", ["isAuthenticated", "isStaff"]),
   },
   methods: {
     closeSidebarAndRoute(route) {

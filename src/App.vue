@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     ...mapActions("cart", ["setShowCart"]),
-    ...mapActions("user", ["setIsAuthenticated"]),
+    ...mapActions("user", ["setIsAuthenticated", "setIsStaff"]),
     toggleSidebar() {
       this.showSidebar = !this.showSidebar;
     },
@@ -80,6 +80,7 @@ export default {
     }
     else{
       this.setIsAuthenticated(data.isAuthenticated)
+      this.setIsStaff(data.isStaff)
     }
   }
 };

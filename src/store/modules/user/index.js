@@ -8,6 +8,7 @@ export default {
   state() {
     return {
       isAuthenticated: false,
+      isStaff: false,
       auth: cookie.get("auth"),
       device: cookie.get("device"),
     };
@@ -34,6 +35,9 @@ export default {
     },
     async setIsAuthenticated(context, payload){
       context.commit("setIsAuthenticated", payload)
+    },
+    async setIsStaff(context, payload){
+      context.commit("setIsStaff", payload)
     }
   },
   getters: {
@@ -46,21 +50,30 @@ export default {
     getDevice(state) {
       return state.device;
     },
+    isStaff(state) {
+      return state.isStaff;
+    }
   },
   mutations: {
     login(state, payload) {
       Vue.$cookies.set("auth", payload);
       state.isAuthenticated = true;
+      console.log(payload);
+      state.isStaff = payload.isStaff;
       state.auth = payload;
       router.push("/order");
     },
     logout(state) {
       state.isAuthenticated = false;
+      state.isStaff = false;
       state.auth = "";
       Vue.$cookies.set("auth", "");
     },
     setIsAuthenticated(state, payload) {
       state.isAuthenticated = payload;
+    },
+    setIsStaff(state, payload) {
+      state.isStaff = payload;
     }
   },
 };

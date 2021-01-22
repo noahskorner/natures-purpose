@@ -1,5 +1,4 @@
 <template>
-  <section>
     <!-- Product Grid -->
     <product-grid>
       <template #header>
@@ -69,7 +68,7 @@
         </div>
         <hr />
       </template>
-      <template #products v-if="products.length">
+      <template #products>
         <product-card
           v-for="(product, index) in getFilteredProducts"
           link="signature-meals"
@@ -83,9 +82,7 @@
           :class="{ 'border-top': index === 0 && windowWidth <= 575 }"
         />
       </template>
-      <div v-else>Loading...</div>
     </product-grid>
-  </section>
 </template>
 
 <script>
@@ -97,7 +94,7 @@ export default {
     return {
       products: [],
       filters: [],
-      tags: [],
+      tags: []
     };
   },
   setup() {
